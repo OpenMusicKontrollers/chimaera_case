@@ -1,0 +1,92 @@
+include("../scripts/helper.js")
+
+function rib_C() {
+}
+
+rib_C.prototype.toString = function() {
+	print("rib_C.js:", "toString(): ");
+}
+
+rib_C.init = function(formWidget) {
+	if (!isNull(formWidget)) {
+		rib_C.widgets = getWidgets(formWidget);
+	}
+};
+
+rib_C.generate = function(di, file) {
+	return call_widgets(di, rib_C.widgets, rib_C.getOperation);
+}
+
+rib_C.generatePreview = function(di, iconSize) {
+	return call_default(di, rib_C.getOperation);
+}
+
+rib_C.getOperation = function(di, w, t, b, l, h, s, n) {
+	var doc = di.getDocument();
+	var op = new RAddObjectsOperation();
+	var cut = newLayer(doc, di, "cut", 255, 0, 0);
+
+	var vb1 = new Array(
+		new RVector(0				, 0),
+		new RVector(0				, -7),
+		new RVector(-w			, -7),
+		new RVector(-w			, -12),
+		new RVector(0				, -12),
+		new RVector(0				, -20+b/2),
+		new RVector(-w+l-h	, -20+b/2),
+		new RVector(-w+l-h	, -20+s/2),
+		new RVector(-w+l		, -20+s/2),
+		new RVector(-w+l		, -20-s/2),
+		new RVector(-w+l-h	, -20-s/2),
+		new RVector(-w+l-h	, -20-b/2),
+		new RVector(0				, -20-b/2),
+		new RVector(0				, -28),
+		new RVector(-w			, -28),
+		new RVector(-w			, -33),
+		new RVector(0				, -33),
+		new RVector(0				, -54)
+	);
+
+	var vb2 = new Array(
+		new RVector(24			, -54),
+		new RVector(24-w		, -54),
+		new RVector(24-w		, -49-w-t/2),
+		new RVector(10			, -49-w-t/2),
+		new RVector(10			, -49+t/2),
+		new RVector(24-w-1.6, -49+t/2),
+		new RVector(24-w-1.6, -33),
+		new RVector(8				, -41),
+		new RVector(8				, -10),
+		new RVector(24-w-4.1, -10), // 3.1 = 1.6+2.5
+		new RVector(24-w-4.1, -5-t/2),
+		new RVector(10			, -5-t/2),
+		new RVector(10			, -5+w+t/2),
+		new RVector(24-w		, -5+w+t/2),
+		new RVector(24-w		, 0),
+		new RVector(24			, 0)
+	);
+
+	var line1 = new RPolylineEntity(doc, new RPolylineData());
+	for(var i=0; i<vb1.length; i++)
+		line1.appendVertex(vb1[i]);
+	line1.setLayerId(cut);
+	op.addObject(line1, false);
+
+	var line2 = new RPolylineEntity(doc, new RPolylineData());
+	for(var i=0; i<vb2.length; i++)
+		line2.appendVertex(vb2[i]);
+	line2.setLayerId(cut);
+	op.addObject(line2, false);
+
+	var va1 = new RVector(12, 0);
+	var arc1 = new RArcEntity(doc, new RArcData(va1, 12, 0.0, Math.PI, false));
+	arc1.setLayerId(cut);
+	op.addObject(arc1, false);
+
+	var va2 = new RVector(12, -54);
+	var arc2 = new RArcEntity(doc, new RArcData(va2, 12, Math.PI, 0, false));
+	arc2.setLayerId(cut);
+	op.addObject(arc2, false);
+
+	return op;
+}
