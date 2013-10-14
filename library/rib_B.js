@@ -21,7 +21,7 @@
  *     distribution.
  */
 
-include("../scripts/helper.js")
+include("../scripts/chimaera_helper.js")
 
 function rib_B() {
 }
@@ -44,51 +44,61 @@ rib_B.generatePreview = function(di, iconSize) {
 	return call_default(di, rib_B.getOperation);
 }
 
-rib_B.getOperation = function(di, w, t, b, l, h, s, n) {
+rib_B.getOperation = function(di, C) {
 	var doc = di.getDocument();
 	var op = new RAddObjectsOperation();
 	var cut = newLayer(doc, di, "cut", 255, 0, 0);
 
+	var X0 = -C.Mth;
+	var X1 = 0;
+	var X2 = X0 + C.Nle;
+	var X3 = X2 - C.Bhe;
+
 	var vb1 = new Array(
-		new RVector(0				, 0),
-		new RVector(0				, -7),
-		new RVector(-w			, -7),
-		new RVector(-w			, -12),
-		new RVector(0				, -12),
-		new RVector(0				, -20+b/2),
-		new RVector(-w+l-h	, -20+b/2),
-		new RVector(-w+l-h	, -20+s/2),
-		new RVector(-w+l		, -20+s/2),
-		new RVector(-w+l		, -20-s/2),
-		new RVector(-w+l-h	, -20-s/2),
-		new RVector(-w+l-h	, -20-b/2),
-		new RVector(0				, -20-b/2),
-		new RVector(0				, -28),
-		new RVector(-w			, -28),
-		new RVector(-w			, -33),
-		new RVector(0				, -33),
-		new RVector(0				, -54)
+		new RVector(X1			, 0),
+		new RVector(X1			, -7),
+		new RVector(X0			, -7),
+		new RVector(X0			, -12),
+		new RVector(X1			, -12),
+		new RVector(X1			, -20+C.Ndi/2),
+		new RVector(X3			, -20+C.Ndi/2),
+		new RVector(X3			, -20+C.Bwi/2),
+		new RVector(X2			, -20+C.Bwi/2),
+		new RVector(X2			, -20-C.Bwi/2),
+		new RVector(X3			, -20-C.Bwi/2),
+		new RVector(X3			, -20-C.Ndi/2),
+		new RVector(X1			, -20-C.Ndi/2),
+		new RVector(X1			, -28),
+		new RVector(X0			, -28),
+		new RVector(X0			, -33),
+		new RVector(X1			, -33),
+		new RVector(X1			, -54)
 	);
 
+	X0 = 10;
+	X1 = C.Hca;
+	X2 = X1 - C.Mth;
+	X3 = X2 - 1.6;
+
 	var vb2 = new Array(
-		new RVector(24			, -54),
-		new RVector(24-w		, -54),
-		new RVector(24-w		, -49-w-t/2),
-		new RVector(10			, -49-w-t/2),
-		new RVector(10			, -49+t/2),
-		new RVector(24-w		, -49+t/2),
-		new RVector(24-w		, -35),
-		new RVector(24-w-1.6, -35),
-		new RVector(24-w-1.6, -33),
-		new RVector(10			, -41),
-		new RVector(10			, -13),
-		new RVector(24-w-1.6, -16),
-		new RVector(24-w-1.6, -5-t/2),
-		new RVector(10			, -5-t/2),
-		new RVector(10			, -5+w+t/2),
-		new RVector(24-w		, -5+w+t/2),
-		new RVector(24-w		, 0),
-		new RVector(24			, 0)
+		new RVector(X1			, -54),
+		new RVector(X2			, -54),
+		new RVector(X2			, -49-C.Mth-C.Mto/2),
+		new RVector(X0			, -49-C.Mth-C.Mto/2),
+		new RVector(X0			, -49+C.Mto/2),
+		new RVector(X2			, -49+C.Mto/2),
+		new RVector(X2			, -35),
+		new RVector(X3			,	-35),
+		new RVector(X3			,	-33),
+		new RVector(X0			, -41),
+		new RVector(X0			, -13),
+		new RVector(X3			,	-16),
+		new RVector(X3			,	-5-C.Mto/2),
+		new RVector(X0			, -5-C.Mto/2),
+		new RVector(X0			, -5+C.Mth+C.Mto/2),
+		new RVector(X2			, -5+C.Mth+C.Mto/2),
+		new RVector(X2			, 0),
+		new RVector(X1			, 0)
 	);
 
 	var line1 = new RPolylineEntity(doc, new RPolylineData());
@@ -104,12 +114,12 @@ rib_B.getOperation = function(di, w, t, b, l, h, s, n) {
 	op.addObject(line2, false);
 
 	var va1 = new RVector(12, 0);
-	var arc1 = new RArcEntity(doc, new RArcData(va1, 12, 0.0, Math.PI, false));
+	var arc1 = new RArcEntity(doc, new RArcData(va1, C.Hca/2, 0.0, Math.PI, false));
 	arc1.setLayerId(cut);
 	op.addObject(arc1, false);
 
 	var va2 = new RVector(12, -54);
-	var arc2 = new RArcEntity(doc, new RArcData(va2, 12, Math.PI, 0, false));
+	var arc2 = new RArcEntity(doc, new RArcData(va2, C.Hca/2, Math.PI, 0, false));
 	arc2.setLayerId(cut);
 	op.addObject(arc2, false);
 

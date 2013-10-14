@@ -21,7 +21,7 @@
  *     distribution.
  */
 
-include("../scripts/helper.js");
+include("../scripts/chimaera_helper.js");
 
 function base() {
 }
@@ -44,18 +44,18 @@ base.generatePreview = function(di, iconSize) {
 	return call_default(di, base.getOperation);
 }
 
-base.getOperation = function(di, w, t, b, l, h, s, n) {
+base.getOperation = function(di, C) {
 	var doc = di.getDocument();
 	var op = new RAddObjectsOperation();
 	var cut = newLayer(doc, di, "cut", 255, 0, 0);
 
-	var Ln = (n+1)*S;
-	var L = L1+Ln+M;
+	var Ln = (C.Nsu+1)*C.Lsu;
+	var L = C.Lle+Ln+C.Lsi;
 
 	var vb1 = new Array(
 		[0, 0],
-		[0, -D2],
-		[L, -D2],
+		[0, -C.Wce],
+		[L, -C.Wce],
 		[L, 0]
 	);
 	var line1 = new RPolylineEntity(doc, new RPolylineData());
@@ -66,10 +66,10 @@ base.getOperation = function(di, w, t, b, l, h, s, n) {
 	op.addObject(line1, false);
 
 	var vb2 = new Array(
-		[L-M-t/2		, -12],
-		[L-M-t/2		, -44],
-		[L-M+w+t/2	, -44],
-		[L-M+w+t/2	, -12]
+		[L-C.Lsi-C.Mto/2				, -12],
+		[L-C.Lsi-C.Mto/2				, -44],
+		[L-C.Lsi+C.Mth+C.Mto/2	, -44],
+		[L-C.Lsi+C.Mth+C.Mto/2	, -12]
 	);
 	var line2 = new RPolylineEntity(doc, new RPolylineData());
 	for(var i=0; i<vb2.length; i++)

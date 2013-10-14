@@ -21,7 +21,7 @@
  *     distribution.
  */
 
-include("../scripts/helper.js")
+include("../scripts/chimaera_helper.js")
 
 function hole_A() {
 }
@@ -44,16 +44,16 @@ hole_A.generatePreview = function(di, iconSize) {
 	return call_default(di, hole_A.getOperation);
 }
 
-hole_A.getOperation = function(di, w, t, b, l, h, s, n) {
+hole_A.getOperation = function(di, C) {
 	var doc = di.getDocument();
 	var op = new RAddObjectsOperation();
 	var cut = newLayer(doc, di, "cut", 255, 0, 0);
 
 	var vb1 = new Array(
-		new RVector(-t/2	, 2.5),
-		new RVector(-t/2	, -2.5),
-		new RVector(w+t/2	, -2.5),
-		new RVector(w+t/2	, 2.5)
+		new RVector(-C.Mto/2			, 2.5),
+		new RVector(-C.Mto/2			, -2.5),
+		new RVector(C.Mth+C.Mto/2	, -2.5),
+		new RVector(C.Mth+C.Mto/2	, 2.5)
 	);
 
 	var line1 = new RPolylineEntity(doc, new RPolylineData());

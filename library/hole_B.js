@@ -21,7 +21,7 @@
  *     distribution.
  */
 
-include("../scripts/helper.js")
+include("../scripts/chimaera_helper.js")
 
 function hole_B() {
 }
@@ -44,16 +44,16 @@ hole_B.generatePreview = function(di, iconSize) {
 	return call_default(di, hole_B.getOperation);
 }
 
-hole_B.getOperation = function(di, w, t, b, l, h, s, n) {
+hole_B.getOperation = function(di, C) {
 	var doc = di.getDocument();
 	var op = new RAddObjectsOperation();
 	var cut = newLayer(doc, di, "cut", 255, 0, 0);
 
 	var vb1 = new Array(
-		new RVector(-w/2-t/2	, 13),
-		new RVector(-w/2-t/2	, 8),
-		new RVector(w/2+t/2		, 8),
-		new RVector(w/2+t/2		, 13)
+		new RVector(-C.Mth/2-C.Mto/2	, 13),
+		new RVector(-C.Mth/2-C.Mto/2	, 8),
+		new RVector(C.Mth/2+C.Mto/2		, 8),
+		new RVector(C.Mth/2+C.Mto/2		, 13)
 	);
 
 	var line1 = new RPolylineEntity(doc, new RPolylineData());
@@ -64,7 +64,7 @@ hole_B.getOperation = function(di, w, t, b, l, h, s, n) {
 	op.addObject(line1, false);
 
 	var va1 = new RVector(0, 0);
-	var arc1 = new RArcEntity(doc, new RArcData(va1, b/2, 0.0, Math.PI, false));
+	var arc1 = new RArcEntity(doc, new RArcData(va1, C.Ndi/2, 0.0, Math.PI, false));
 	arc1.setLayerId(cut);
 	op.addObject(arc1, false);
 

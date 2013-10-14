@@ -21,7 +21,7 @@
  *     distribution.
  */
 
-include("../scripts/helper.js");
+include("../scripts/chimaera_helper.js");
 
 function wrapping() {
 }
@@ -44,17 +44,20 @@ wrapping.generatePreview = function(di, iconSize) {
 	return call_default(di, wrapping.getOperation);
 }
 
-wrapping.getOperation = function(di, w, t, b, l, h, s, n) {
+wrapping.getOperation = function(di, C) {
 	var doc = di.getDocument();
 	var op = new RAddObjectsOperation();
 	var cut = newLayer(doc, di, "cut", 255, 0, 0);
 
-	var Ln = (n+1)*S;
-	var L = L1+Ln+M;
+	var Ln = (C.Nsu+1)*C.Lsu;
+	var L = C.Lle+Ln+C.Lsi;
 
-	var DD = (12+w/2) * Math.PI;
+	var DD = (C.Hca/2+C.Mth/2) * Math.PI;
 	DD = Math.ceil(DD/2)*2; //TODO or round or ceil?
-	var D = D1+DD+D2+DD+D3;
+	var D = C.Wto+DD+C.Wce+DD+C.Wbo;
+
+	var Da = C.Wto;
+	var Db = C.Wto+DD+C.Wce+DD;
 
 	// cutting
 	var vb1 = new Array(
@@ -79,24 +82,24 @@ wrapping.getOperation = function(di, w, t, b, l, h, s, n) {
 			if(y%4 === 0)	{
 				dx = 0;
 				if(x < 0)	{
-					p1 = [0+dx	, -D1-y];
-					p3 = [0+dx	, -D1-DD-D2-DD+y];
+					p1 = [0+dx	, -Da-y];
+					p3 = [0+dx	, -Db+y];
 				} else {
-					p1 = [x+dx	, -D1-y];
-					p3 = [x+dx	, -D1-DD-D2-DD+y];
+					p1 = [x+dx	, -Da-y];
+					p3 = [x+dx	, -Db+y];
 				}
-				p2 = [x+dx+15, -D1-y];
-				p4 = [x+dx+15, -D1-DD-D2-DD+y];
+				p2 = [x+dx+15, -Da-y];
+				p4 = [x+dx+15, -Db+y];
 			} else {
 				dx = 10;
-				p1 = [x+dx	, -D1-y];
-				p3 = [x+dx	, -D1-DD-D2-DD+y];
+				p1 = [x+dx	, -Da-y];
+				p3 = [x+dx	, -Db+y];
 				if(x+dx+15 > L) {
-					p2 = [L				, -D1-y];
-					p4 = [L				, -D1-DD-D2-DD+y];
+					p2 = [L				, -Da-y];
+					p4 = [L				, -Db+y];
 				} else {
-					p2 = [x+dx+15	, -D1-y];
-					p4 = [x+dx+15	, -D1-DD-D2-DD+y];
+					p2 = [x+dx+15	, -Da-y];
+					p4 = [x+dx+15	, -Db+y];
 				}
 			}
 

@@ -21,39 +21,57 @@
  *     distribution.
  */
 
-var L1 = 30;
-var M = 5;
-var S = 80;
-var H = 24;
-var Lb = 69;
-var D1 = 34;
-var D2 = 54;
-var D3 = 20;
+function defaultC() {
+	var C = {
+		Lle : 30,		// length left
+		Lsi : 5,		// length side
+		Lsu : 80,		// length sensor unit
+		Hca : 24,		// height case
+		Lri : 69,		// length right
+		Wto : 34,		// width top
+		Wce : 54,		// width center
+		Wbo : 20,		// width bottom
+
+		Mth : 2.5,	// material thickness
+		Mto : 0.1,	// material tolerance
+		Ndi : 3.0,	// nut diameter
+		Nle : 6.0,	// nut length
+		Bhe : 1.8,	// bolt height
+		Bwi : 5.5,	// bolt width
+		Nsu : 6			// number of sensor units
+	};
+
+	return C;
+}
 
 function call_widgets(di, widgets, cb) {
-	var w = widgets["mleThickness"].getValue();
-	var t = widgets["mleTolerance"].getValue();
-	var b = widgets["mleDiameter"].getValue();
-	var l = widgets["mleLength"].getValue();
-	var h = widgets["mleHeight"].getValue();
-	var s = widgets["mleWidth"].getValue();
-	var n = widgets["mleN"].getValue();
+	var C = defaultC();
 
-	return cb(di, w, t, b, l, h, s, n);
+	C.Mth = widgets["mleThickness"].getValue();
+	C.Mto = widgets["mleTolerance"].getValue();
+	C.Ndi = widgets["mleDiameter"].getValue();
+	C.Nle = widgets["mleLength"].getValue();
+	C.Bhe = widgets["mleHeight"].getValue();
+	C.Bwi = widgets["mleWidth"].getValue();
+	C.Nsu = widgets["mleN"].getValue();
+
+	return cb(di, C);
 }
 
 function call_default(di, cb) {
-	return cb(di, 2.5, 0.1, 3.0, 6.0, 1.8, 5.5, 6);
+	var C = defaultC();
+
+	return cb(di, C);
 }
 
-function newRef(doc, di, dict, w, t, b, l, h, s, n) {
+function newRef(doc, di, dict, C) {
 	for(var key in dict) {
 		var block = new RBlock(doc, key, new RVector(0,0));
 		var op = new RAddObjectOperation(block);
 		di.applyOperation(op);
 
 		di.setCurrentBlock(key);
-		op = dict[key].getOperation(di, w, t, b, l, h, s, n);
+		op = dict[key].getOperation(di, C);
 		di.applyOperation(op);
 		di.setCurrentBlock(RBlock.modelSpaceName);
 	}
