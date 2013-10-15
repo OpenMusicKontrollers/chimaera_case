@@ -118,6 +118,7 @@ chimaeraGetOperation = function(di, C) {
 	var omkl = pwd+"OMK_label.dxf";
 	var oshw = pwd+"OSHW.dxf";
 	var chim = pwd+"chimaera_label.dxf";
+	var ribl = pwd+"rib_D_label.dxf";
 
 	for(var i=0; i<C.Nsu; i++) {
 		var X = C.Lle+i*C.Lsu;
@@ -147,6 +148,7 @@ chimaeraGetOperation = function(di, C) {
 	importRef(doc, di, "OMK_label", omkl, C.Lle, -20, 1, 0);
 	importRef(doc, di, "OSHW", oshw, L-20, -20, 1, -Math.PI/2);
 	importRef(doc, di, "chimaera_label", chim, C.Lle+C.Nsu*C.Lsu+6, -C.Wto-DD-18, 1, 0);
+	importRef(doc, di, "rib_D_label", ribl, x+C.Hca/2, y, 1, 0);
 
 	return op;
 }
