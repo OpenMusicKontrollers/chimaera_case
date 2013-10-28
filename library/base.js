@@ -50,6 +50,7 @@ base.getOperation = function(di, C) {
 	var cut = newLayer(doc, di, "cut", 255, 0, 0);
 
 	var Ln = (C.Nsu+1)*C.Lsu;
+	var Ld = C.Lle + C.Nsu*C.Lsu;
 	var L = C.Lle+Ln+C.Lsi;
 
 	var vb1 = new Array(
@@ -77,6 +78,20 @@ base.getOperation = function(di, C) {
 	line2.setClosed(true);
 	line2.setLayerId(cut);
 	op.addObject(line2, false);
+
+	var vb3 = new Array(
+		[Ld				, 0],
+		[Ld				, -C.Wce/2+5],
+		[Ld+4			, -C.Wce/2+7],
+		[Ld+4			, -C.Wce/2-7],
+		[Ld				, -C.Wce/2-5],
+		[Ld				, -C.Wce]
+	);
+	var line3 = new RPolylineEntity(doc, new RPolylineData());
+	for(var i=0; i<vb3.length; i++)
+		line3.appendVertex(new RVector(vb3[i][0], vb3[i][1]));
+	line3.setLayerId(cut);
+	op.addObject(line3, false);
 
 	return op;
 }
