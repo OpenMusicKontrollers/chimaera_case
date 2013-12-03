@@ -23,6 +23,8 @@
 
 function defaultC() {
 	var C = {
+		Rev : 3,
+
 		Lle : 30,		// length left
 		Lsi : 5,		// length side
 		Lsu : 80,		// length sensor unit

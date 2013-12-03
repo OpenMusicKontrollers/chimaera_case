@@ -36,8 +36,9 @@ doc.setUnit(RS.Millimeter);
 include("../library/chimaera.js");
 
 var C = defaultC();
+C.Rev = 4;	// board revision
 //C.Lle = 5;	// length left
-//C.Nsu = 9;	// number of sensor units
+C.Nsu = 9;	// number of sensor units
 
 var op = chimaeraGetOperation(di, C);
 op.apply(doc);
