@@ -32,12 +32,16 @@ var args = QCoreApplication.arguments();
 output = args[args.length-1];
 
 doc.setUnit(RS.Millimeter);
+doc.setVariable("PageSettings/PaperWidth", 900);
+doc.setVariable("PageSettings/PaperHeight", 600);
+doc.setVariable("PageSettings/OffsetX", -20);
+doc.setVariable("PageSettings/OffsetY", -580);
 
 include("../library/chimaera.js");
 
 var C = defaultC();
 //C.Lle = 5;	// length left
-//C.Nsu = 9;	// number of sensor units
+C.Nsu = 9;	// number of sensor units
 
 var op = chimaeraGetOperation(di, C);
 op.apply(doc);
