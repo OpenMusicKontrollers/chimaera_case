@@ -40,6 +40,7 @@ doc.setVariable("PageSettings/OffsetY", -580);
 include("../library/chimaera.js");
 
 var C = defaultC();
+C.Rev = 4;	// board revision
 //C.Lle = 5;	// length left
 C.Nsu = 9;	// number of sensor units
 

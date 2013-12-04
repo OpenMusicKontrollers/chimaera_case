@@ -23,28 +23,28 @@
 
 include("../scripts/chimaera_helper.js")
 
-function rib_D() {
+function rib_D_Rev4() {
 }
 
-rib_D.prototype.toString = function() {
-	print("rib_D.js:", "toString(): ");
+rib_D_Rev4.prototype.toString = function() {
+	print("rib_D_Rev4.js:", "toString(): ");
 }
 
-rib_D.init = function(formWidget) {
+rib_D_Rev4.init = function(formWidget) {
 	if (!isNull(formWidget)) {
-		rib_D.widgets = getWidgets(formWidget);
+		rib_D_Rev4.widgets = getWidgets(formWidget);
 	}
 };
 
-rib_D.generate = function(di, file) {
-	return call_widgets(di, rib_D.widgets, rib_D.getOperation);
+rib_D_Rev4.generate = function(di, file) {
+	return call_widgets(di, rib_D_Rev4.widgets, rib_D_Rev4.getOperation);
 }
 
-rib_D.generatePreview = function(di, iconSize) {
-	return call_default(di, rib_D.getOperation);
+rib_D_Rev4.generatePreview = function(di, iconSize) {
+	return call_default(di, rib_D_Rev4.getOperation);
 }
 
-rib_D.getOperation = function(di, C) {
+rib_D_Rev4.getOperation = function(di, C) {
 	var doc = di.getDocument();
 	var op = new RAddObjectsOperation();
 	var cut = newLayer(doc, di, "cut", 255, 0, 0);
@@ -98,6 +98,7 @@ rib_D.getOperation = function(di, C) {
 		new RVector(X1			, 0)
 	);
 
+	/*
 	var vb3 = new Array(
 		new RVector(X2-1.6, -42),
 		new RVector(X2-1.6, -25),
@@ -112,6 +113,28 @@ rib_D.getOperation = function(di, C) {
 		new RVector(X2-5.6, -14),
 		new RVector(X2-3.6, -14),
 		new RVector(X2-1.6, -15)
+	);
+	*/
+
+	//var Y1 = -42;
+	//var Y2 = -21;
+	var Y1 = -26.8;
+	var Y2 = -36.95;
+
+	var vb3 = new Array(
+		new RVector(X2-1.6, Y1),
+		new RVector(X2-1.6, Y1+17),
+		new RVector(X2-16	, Y1+17), // 16=1.6+14.4
+		new RVector(X2-16	, Y1)
+	);
+
+	var vb4 = new Array(
+		new RVector(X2-1.6, Y2),
+		new RVector(X2-3.6, Y2-1), // 3.6=1.6+2
+		new RVector(X2-5.6, Y2-1), // r.5=1.6+2+2
+		new RVector(X2-5.6, Y2+7),
+		new RVector(X2-3.6, Y2+7),
+		new RVector(X2-1.6, Y2+6)
 	);
 
 	var line1 = new RPolylineEntity(doc, new RPolylineData());
@@ -150,17 +173,17 @@ rib_D.getOperation = function(di, C) {
 	arc2.setLayerId(cut);
 	op.addObject(arc2, false);
 
-	var va3 = new RVector(12-C.Mth, -18);
+	var va3 = new RVector(12-C.Mth, -33.95);
 	var arc3 = new RCircleEntity(doc, new RCircleData(va3, 4));
 	arc3.setLayerId(cut);
 	op.addObject(arc3, false);
 
-	var va4 = new RVector(15-C.Mth, -9.5);
+	var va4 = new RVector(15-C.Mth, -44.3);
 	var arc4 = new RCircleEntity(doc, new RCircleData(va4, 1.5));
 	arc4.setLayerId(cut);
 	op.addObject(arc4, false);
 
-	var va5 = new RVector(19-C.Mth, -9.5);
+	var va5 = new RVector(19-C.Mth, -44.3);
 	var arc5 = new RCircleEntity(doc, new RCircleData(va5, 1.5));
 	arc5.setLayerId(cut);
 	op.addObject(arc5, false);

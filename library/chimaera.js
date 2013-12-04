@@ -30,7 +30,8 @@ include("./side.js");
 include("./rib_A.js");
 include("./rib_B.js");
 include("./rib_C.js");
-include("./rib_D.js");
+include("./rib_D_Rev3.js");
+include("./rib_D_Rev4.js");
 include("../scripts/chimaera_helper.js");
 
 function chimaera() {
@@ -80,7 +81,8 @@ chimaeraGetOperation = function(di, C) {
 		"rib_A": rib_A,
 		"rib_B": rib_B,
 		"rib_C": rib_C,
-		"rib_D": rib_D
+		"rib_D_Rev3": rib_D_Rev3,
+		"rib_D_Rev4": rib_D_Rev4
 	};
 	newRef(doc, di, dict, C);
 
@@ -114,11 +116,21 @@ chimaeraGetOperation = function(di, C) {
 
 	var pwd = "/home/hp/omk/hardware/dxf/case/library/";
 	var su16 = pwd+"SU-16_Unit-Rev7.dxf";
-	var dspf3 = pwd+"DSP-F3_Unit-Rev3.dxf";
+	var dspf3;
+	var ribl;
+	switch(C.Rev) {
+		case 3:
+			dspf3 = pwd+"DSP-F3_Unit-Rev3.dxf";
+			ribl = pwd+"rib_D_Rev3_label.dxf";
+			break;
+		case 4:
+			dspf3 = pwd+"DSP-F3_Unit-Rev4.dxf";
+			ribl = pwd+"rib_D_Rev4_label.dxf";
+			break;
+	}
 	var omkl = pwd+"OMK_label.dxf";
 	var oshw = pwd+"OSHW.dxf";
 	var chim = pwd+"chimaera_label.dxf";
-	var ribl = pwd+"rib_D_label.dxf";
 
 	for(var i=0; i<C.Nsu; i++) {
 		var X = C.Lle+i*C.Lsu;
@@ -142,13 +154,27 @@ chimaeraGetOperation = function(di, C) {
 	}
 	addRef(doc, di, "rib_C", x, y, 1, 0);
 	x += 30;
-	addRef(doc, di, "rib_D", x, y, 1, 0);
+	switch(C.Rev) {
+		case 3:
+			addRef(doc, di, "rib_D_Rev3", x, y, 1, 0);
+			break;
+		case 4:
+			addRef(doc, di, "rib_D_Rev4", x, y, 1, 0);
+			break;
+	}
 
 	// labels
 	importRef(doc, di, "OMK_label", omkl, C.Lle, -20, 1, 0);
 	importRef(doc, di, "OSHW", oshw, L-20, -20, 1, -Math.PI/2);
 	importRef(doc, di, "chimaera_label", chim, C.Lle+C.Nsu*C.Lsu+6, -C.Wto-DD-18, 1, 0);
-	importRef(doc, di, "rib_D_label", ribl, x+C.Hca/2, y, 1, 0);
+	switch(C.Rev) {
+		case 3:
+			importRef(doc, di, "rib_D_Rev3_label", ribl, x+C.Hca/2, y, 1, 0);
+			break;
+		case 4:
+			importRef(doc, di, "rib_D_Rev4_label", ribl, x+C.Hca/2, y-C.Wce, 1, 0);
+			break;
+	}
 
 	return op;
 }
