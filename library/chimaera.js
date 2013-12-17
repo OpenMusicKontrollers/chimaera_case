@@ -46,6 +46,7 @@ chimaeraGetOperation = function(di, C) {
 	var doc = di.getDocument();
 	var op = new RAddObjectsOperation();
 	var cut = newLayer(doc, di, "cut", 255, 0, 0);
+	var eng = newLayer(doc, di, "engrave", 0, 255, 0);
 
 	var Ln = (C.Nsu+1)*C.Lsu;
 	var L = C.Lle+Ln+C.Lsi;
@@ -151,9 +152,9 @@ chimaeraGetOperation = function(di, C) {
 	}
 
 	// labels
-	importRef(doc, di, "OMK_label", omkl, C.Lle, -20, 1, 0);
+	importRef(doc, di, "OMK_label", omkl, C.Lle, -13-(C.Wto-13)/2, 1, 0);
 	importRef(doc, di, "OSHW", oshw, L-20, -20, 1, -Math.PI/2);
-	importRef(doc, di, "chimaera_label", chim, C.Lle+C.Nsu*C.Lsu+6, -C.Wto-DD-18, 1, 0);
+	importRef(doc, di, "chimaera_label", chim, C.Lle+(C.Nsu+0.5)*C.Lsu+C.Lsi/2, -C.Wto-DD-C.Wce/2, 1, 0);
 	switch(C.Rev) {
 		case 3:
 			importRef(doc, di, "rib_D_Rev3_label", ribl, x+C.Hca/2, y, 1, 0);
@@ -162,6 +163,13 @@ chimaeraGetOperation = function(di, C) {
 			importRef(doc, di, "rib_D_Rev4_label", ribl, x+C.Hca/2, y-C.Wce, 1, 0);
 			break;
 	}
+
+	// labels
+	/*TODO
+	var txt = new RTextEntity(doc, new RTextData(new RVector(0, 0), new RVector(x, y), 8.0, 8.0, RS.VAlignTop, RS.HAlignCenter, RS.LeftToRight, RS.Exact, 1.0, "S-144", "Berenika", true, false, 0, true));
+	txt.setLayerId(eng);
+	op.addObject(txt, false);
+	*/
 
 	return op;
 }
