@@ -8,6 +8,8 @@
  * conditions.
  */
 
+include("scripts/Modify/Explode/Explode.js");
+
 function defaultC() {
 	var C = {
 		Rev : 3,
@@ -104,5 +106,35 @@ function newLayer(doc, di, name, r, g, b) {
 		var op = new RAddObjectOperation(layer);
 		di.applyOperation(op);
 		return doc.getLayerId(name);
+	}
+}
+
+function explode_text(doc, op, entity) {
+	var newShapes = [];
+	var painterPaths = entity.getPainterPaths();
+	var k;
+	var layer = entity.getLayerId();
+
+	for(k=0; k<painterPaths.length; k++) {
+		if(painterPaths[k].getFeatureSize()<0)
+			continue;
+
+		var shapes = painterPaths[k].getShapes();
+		for(n=0; n<shapes.length; n++) {
+			var shape = shapes[n];
+			if(isSplineShape(shape))
+				shape = ShapeAlgorithms.splineToLineOrArc(shape, 1e-6*painterPaths[k].getFeatureSize());
+			if(!isNull(shape))
+				newShapes.push(shape.clone());
+		}
+	}
+
+	if(newShapes.length!==0) {
+		for(k=0; k<newShapes.length; k++) {
+			var shape = newShapes[k];
+			var e = shapeToEntity(doc, shape);
+			e.setLayerId(layer);
+			op.addObject(e, false);
+		}
 	}
 }

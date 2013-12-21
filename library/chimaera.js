@@ -19,6 +19,9 @@ include("./rib_B.js");
 include("./rib_C.js");
 include("./rib_D_Rev3.js");
 include("./rib_D_Rev4.js");
+include("./label_omk.js");
+include("./label_chim.js");
+
 include("../scripts/chimaera_helper.js");
 
 function chimaera() {
@@ -70,7 +73,9 @@ chimaeraGetOperation = function(di, C) {
 		"rib_B": rib_B,
 		"rib_C": rib_C,
 		"rib_D_Rev3": rib_D_Rev3,
-		"rib_D_Rev4": rib_D_Rev4
+		"rib_D_Rev4": rib_D_Rev4,
+		"label_omk": label_omk,
+		"label_chim": label_chim
 	};
 	newRef(doc, di, dict, C);
 
@@ -116,9 +121,7 @@ chimaeraGetOperation = function(di, C) {
 			ribl = pwd+"rib_D_Rev4_label.dxf";
 			break;
 	}
-	var omkl = pwd+"OMK_label.dxf";
 	var oshw = pwd+"OSHW.dxf";
-	var chim = pwd+"chimaera_label.dxf";
 
 	for(var i=0; i<C.Nsu; i++) {
 		var X = C.Lle+i*C.Lsu;
@@ -152,9 +155,10 @@ chimaeraGetOperation = function(di, C) {
 	}
 
 	// labels
-	importRef(doc, di, "OMK_label", omkl, C.Lle, -13-(C.Wto-13)/2, 1, 0);
+	addRef(doc, di, "label_omk", C.Lle, -13-(C.Wto-13)/2, 1, 0);
 	importRef(doc, di, "OSHW", oshw, L-20, -20, 1, -Math.PI/2);
-	importRef(doc, di, "chimaera_label", chim, C.Lle+(C.Nsu+0.5)*C.Lsu+C.Lsi/2, -C.Wto-DD-C.Wce/2, 1, 0);
+	//importRef(doc, di, "chimaera_label", chim, C.Lle+(C.Nsu+0.5)*C.Lsu+C.Lsi/2, -C.Wto-DD-C.Wce/2, 1, 0);
+	addRef(doc, di, "label_chim", C.Lle+(C.Nsu+0.5)*C.Lsu+C.Lsi/2, -C.Wto-DD-C.Wce/2, 1, 0);
 	switch(C.Rev) {
 		case 3:
 			importRef(doc, di, "rib_D_Rev3_label", ribl, x+C.Hca/2, y, 1, 0);
@@ -163,13 +167,6 @@ chimaeraGetOperation = function(di, C) {
 			importRef(doc, di, "rib_D_Rev4_label", ribl, x+C.Hca/2, y-C.Wce, 1, 0);
 			break;
 	}
-
-	// labels
-	/*TODO
-	var txt = new RTextEntity(doc, new RTextData(new RVector(0, 0), new RVector(x, y), 8.0, 8.0, RS.VAlignTop, RS.HAlignCenter, RS.LeftToRight, RS.Exact, 1.0, "S-144", "Berenika", true, false, 0, true));
-	txt.setLayerId(eng);
-	op.addObject(txt, false);
-	*/
 
 	return op;
 }
