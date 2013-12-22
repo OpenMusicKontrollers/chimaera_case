@@ -156,8 +156,7 @@ chimaeraGetOperation = function(di, C) {
 
 	// labels
 	addRef(doc, di, "label_omk", C.Lle, -13-(C.Wto-13)/2, 1, 0);
-	importRef(doc, di, "OSHW", oshw, L-20, -20, 1, -Math.PI/2);
-	//importRef(doc, di, "chimaera_label", chim, C.Lle+(C.Nsu+0.5)*C.Lsu+C.Lsi/2, -C.Wto-DD-C.Wce/2, 1, 0);
+	importRef(doc, di, "OSHW", oshw, L-20, -13-(C.Wto-13)/2, 1, 0);
 	addRef(doc, di, "label_chim", C.Lle+(C.Nsu+0.5)*C.Lsu+C.Lsi/2, -C.Wto-DD-C.Wce/2, 1, 0);
 	switch(C.Rev) {
 		case 3:
