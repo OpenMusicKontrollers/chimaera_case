@@ -10,30 +10,9 @@
  * conditions.
  */
 
-include("../scripts/chimaera_helper.js")
+include("./helper.js")
 
-function label_chim() {
-}
-
-label_chim.prototype.toString = function() {
-	print("label_chim.js:", "toString(): ");
-}
-
-label_chim.init = function(formWidget) {
-	if (!isNull(formWidget)) {
-		label_chim.widgets = getWidgets(formWidget);
-	}
-};
-
-label_chim.generate = function(di, file) {
-	return call_widgets(di, label_chim.widgets, label_chim.getOperation);
-}
-
-label_chim.generatePreview = function(di, iconSize) {
-	return call_default(di, label_chim.getOperation);
-}
-
-label_chim.getOperation = function(di, C) {
+function label_chim(di, C) {
 	var doc = di.getDocument();
 	var op = new RAddObjectsOperation();
 	var eng = newLayer(doc, di, "engrave", 0, 255, 0);

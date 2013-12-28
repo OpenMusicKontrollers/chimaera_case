@@ -24,30 +24,9 @@ include("./rib_D_Rev4.js");
 include("./label_omk.js");
 include("./label_chim.js");
 
-include("../scripts/chimaera_helper.js");
+include("./helper.js");
 
-function chimaera() {
-}
-
-chimaera.prototype.toString = function() {
-	print("chimaera.js:", "toString(): ");
-}
-
-chimaera.init = function(formWidget) {
-	if (!isNull(formWidget)) {
-		chimaera.widgets = getWidgets(formWidget);
-	}
-};
-
-chimaera.generate = function(di, file) {
-	return call_widgets(di, chimaera.widgets, chimaera.getOperation);
-}
-
-chimaera.generatePreview = function(di, iconSize) {
-	return call_default(di, chimaera.getOperation);
-}
-
-chimaeraGetOperation = function(di, C) {
+function chimaera(di, C) {
 	var doc = di.getDocument();
 	var op = new RAddObjectsOperation();
 	var cut = newLayer(doc, di, "cut", 255, 0, 0);
@@ -110,7 +89,6 @@ chimaeraGetOperation = function(di, C) {
 	}
 
 	var pwd = getAbsolutePathForArg("../library/");
-	print(pwd);
 	var su16 = pwd+"SU-16_Unit-Rev7.dxf";
 	var dspf3;
 	var ribl;
@@ -171,8 +149,4 @@ chimaeraGetOperation = function(di, C) {
 	}
 
 	return op;
-}
-
-chimaera.getOperation = function(di, C) {
-	return chimaeraGetOperation(di, C);
 }

@@ -10,30 +10,9 @@
  * conditions.
  */
 
-include("../scripts/chimaera_helper.js")
+include("./helper.js")
 
-function rib_D_Rev3() {
-}
-
-rib_D_Rev3.prototype.toString = function() {
-	print("rib_D_Rev3.js:", "toString(): ");
-}
-
-rib_D_Rev3.init = function(formWidget) {
-	if (!isNull(formWidget)) {
-		rib_D_Rev3.widgets = getWidgets(formWidget);
-	}
-};
-
-rib_D_Rev3.generate = function(di, file) {
-	return call_widgets(di, rib_D_Rev3.widgets, rib_D_Rev3.getOperation);
-}
-
-rib_D_Rev3.generatePreview = function(di, iconSize) {
-	return call_default(di, rib_D_Rev3.getOperation);
-}
-
-rib_D_Rev3.getOperation = function(di, C) {
+function rib_D_Rev3(di, C) {
 	var doc = di.getDocument();
 	var op = new RAddObjectsOperation();
 	var cut = newLayer(doc, di, "cut", 255, 0, 0);

@@ -12,51 +12,6 @@
 
 include("scripts/Modify/Explode/Explode.js");
 
-function defaultC() {
-	var C = {
-		Rev : 3,
-
-		Lle : 30,		// length left
-		Lsi : 5,		// length side
-		Lsu : 80,		// length sensor unit
-		Hca : 24,		// height case
-		Lri : 69,		// length right
-		Wto : 34,		// width top
-		Wce : 54,		// width center
-		Wbo : 20,		// width bottom
-
-		Mth : 2.5,	// material thickness
-		Mto : 0.1,	// material tolerance
-		Ndi : 3.0,	// nut diameter
-		Nle : 6.0,	// nut length
-		Bhe : 1.8,	// bolt height
-		Bwi : 5.5,	// bolt width
-		Nsu : 6			// number of sensor units
-	};
-
-	return C;
-}
-
-function call_widgets(di, widgets, cb) {
-	var C = defaultC();
-
-	C.Mth = widgets["mleThickness"].getValue();
-	C.Mto = widgets["mleTolerance"].getValue();
-	C.Ndi = widgets["mleDiameter"].getValue();
-	C.Nle = widgets["mleLength"].getValue();
-	C.Bhe = widgets["mleHeight"].getValue();
-	C.Bwi = widgets["mleWidth"].getValue();
-	C.Nsu = widgets["mleN"].getValue();
-
-	return cb(di, C);
-}
-
-function call_default(di, cb) {
-	var C = defaultC();
-
-	return cb(di, C);
-}
-
 function newRef(doc, di, dict, C) {
 	for(var key in dict) {
 		var block = new RBlock(doc, key, new RVector(0,0));
@@ -64,7 +19,7 @@ function newRef(doc, di, dict, C) {
 		di.applyOperation(op);
 
 		di.setCurrentBlock(key);
-		op = dict[key].getOperation(di, C);
+		op = dict[key](di, C);
 		di.applyOperation(op);
 		di.setCurrentBlock(RBlock.modelSpaceName);
 	}
@@ -144,23 +99,26 @@ function explode_text(doc, op, entity) {
 function hasProTools() {
 	for(var i=0; i<RPluginLoader.countPlugins(); i++) {
 		var pluginInfo = RPluginLoader.getPluginInfo(i);
-		if ( (pluginInfo.get("Name") == "Pro Tools") && (!pluginInfo.get("TrialExpired")) )
+		if ( (pluginInfo.get("Name") == "Pro Tools") && (!pluginInfo.get("TrialExpired")) ) {
+			print("QCAD professional edition detected: using polylines instead of lines");
 			return true;
+		}
 	}
+	print("QCAD open source edition detected: using lines instead of polylines");
 	return false;
 }
 
+var isPro = hasProTools();
+
 function multiline(doc, op, layer, points, closed) {
-	if(hasProTools()) {
-		print("QCAD professional edition detected: using polylines instead of lines");
+	if(isPro) {
 		var line = new RPolylineEntity(doc, new RPolylineData());
 		for(var i=0; i<points.length; i++)
 			line.appendVertex(new RVector(points[i][0], points[i][1]));
 		line.setClosed(closed);
 		line.setLayerId(layer);
 		op.addObject(line, false);
-	} else { // !hasProTools()
-		print("QCAD open source edition detected: using lines instead of polylines");
+	} else { // !isPro
 		for(var i=0; i<points.length-1; i++) {
 			var line = new RLineEntity(doc, new RLineData(
 				new RVector(points[i][0], points[i][1]),

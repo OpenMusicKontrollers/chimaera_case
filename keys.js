@@ -10,30 +10,9 @@
  * conditions.
  */
 
-include("../scripts/chimaera_helper.js");
+include("./helper.js");
 
-function keys() {
-}
-
-keys.prototype.toString = function() {
-	print("keys.js:", "toString(): ");
-}
-
-keys.init = function(formWidget) {
-	if (!isNull(formWidget)) {
-		keys.widgets = getWidgets(formWidget);
-	}
-};
-
-keys.generate = function(di, file) {
-	return call_widgets(di, keys.widgets, keys.getOperation);
-}
-
-keys.generatePreview = function(di, iconSize) {
-	return call_default(di, keys.getOperation);
-}
-
-keys.getOperation = function(di, C) {
+function keys(di, C) {
 	var doc = di.getDocument();
 	var op = new RAddObjectsOperation();
 	var eng = newLayer(doc, di, "engrave", 0, 255, 0);

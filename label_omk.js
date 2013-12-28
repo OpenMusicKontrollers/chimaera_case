@@ -10,30 +10,9 @@
  * conditions.
  */
 
-include("../scripts/chimaera_helper.js")
+include("./helper.js")
 
-function label_omk() {
-}
-
-label_omk.prototype.toString = function() {
-	print("label_omk.js:", "toString(): ");
-}
-
-label_omk.init = function(formWidget) {
-	if (!isNull(formWidget)) {
-		label_omk.widgets = getWidgets(formWidget);
-	}
-};
-
-label_omk.generate = function(di, file) {
-	return call_widgets(di, label_omk.widgets, label_omk.getOperation);
-}
-
-label_omk.generatePreview = function(di, iconSize) {
-	return call_default(di, label_omk.getOperation);
-}
-
-label_omk.getOperation = function(di, C) {
+function label_omk(di, C) {
 	var doc = di.getDocument();
 	var op = new RAddObjectsOperation();
 	var eng = newLayer(doc, di, "engrave", 0, 255, 0);

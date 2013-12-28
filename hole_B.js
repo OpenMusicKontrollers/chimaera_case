@@ -10,30 +10,9 @@
  * conditions.
  */
 
-include("../scripts/chimaera_helper.js")
+include("./helper.js")
 
-function hole_B() {
-}
-
-hole_B.prototype.toString = function() {
-	print("hole_B.js:", "toString(): ");
-}
-
-hole_B.init = function(formWidget) {
-	if (!isNull(formWidget)) {
-		hole_B.widgets = getWidgets(formWidget);
-	}
-};
-
-hole_B.generate = function(di, file) {
-	return call_widgets(di, hole_B.widgets, hole_B.getOperation);
-}
-
-hole_B.generatePreview = function(di, iconSize) {
-	return call_default(di, hole_B.getOperation);
-}
-
-hole_B.getOperation = function(di, C) {
+function hole_B(di, C) {
 	var doc = di.getDocument();
 	var op = new RAddObjectsOperation();
 	var cut = newLayer(doc, di, "cut", 255, 0, 0);

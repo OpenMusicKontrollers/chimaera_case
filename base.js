@@ -10,41 +10,42 @@
  * conditions.
  */
 
-include("../scripts/chimaera_helper.js")
+include("./helper.js");
 
-function hole_A() {
-}
-
-hole_A.prototype.toString = function() {
-	print("hole_A.js:", "toString(): ");
-}
-
-hole_A.init = function(formWidget) {
-	if (!isNull(formWidget)) {
-		hole_A.widgets = getWidgets(formWidget);
-	}
-};
-
-hole_A.generate = function(di, file) {
-	return call_widgets(di, hole_A.widgets, hole_A.getOperation);
-}
-
-hole_A.generatePreview = function(di, iconSize) {
-	return call_default(di, hole_A.getOperation);
-}
-
-hole_A.getOperation = function(di, C) {
+function base(di, C) {
 	var doc = di.getDocument();
 	var op = new RAddObjectsOperation();
 	var cut = newLayer(doc, di, "cut", 255, 0, 0);
 
+	var Ln = (C.Nsu+1)*C.Lsu;
+	var Ld = C.Lle + C.Nsu*C.Lsu;
+	var L = C.Lle+Ln+C.Lsi;
+
 	var vb1 = new Array(
-		[-C.Mto/2			, 2.5],
-		[-C.Mto/2			, -2.5],
-		[C.Mth+C.Mto/2	, -2.5],
-		[C.Mth+C.Mto/2	, 2.5]
+		[0, 0],
+		[0, -C.Wce],
+		[L, -C.Wce],
+		[L, 0]
 	);
 	multiline(doc, op, cut, vb1, true);
+
+	var vb2 = new Array(
+		[L-C.Lsi-C.Mto/2				, -12],
+		[L-C.Lsi-C.Mto/2				, -44],
+		[L-C.Lsi+C.Mth+C.Mto/2	, -44],
+		[L-C.Lsi+C.Mth+C.Mto/2	, -12]
+	);
+	multiline(doc, op, cut, vb2, true);
+
+	var vb3 = new Array(
+		[Ld				, 0],
+		[Ld				, -C.Wce/2+5],
+		[Ld+4			, -C.Wce/2+7],
+		[Ld+4			, -C.Wce/2-7],
+		[Ld				, -C.Wce/2-5],
+		[Ld				, -C.Wce]
+	);
+	multiline(doc, op, cut, vb3, false);
 
 	return op;
 }

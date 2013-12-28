@@ -18,6 +18,7 @@ var di = new RDocumentInterface(doc);
 
 var output = "chimaera.dxf";
 var args = QCoreApplication.arguments();
+print(args);
 output = args[args.length-1];
 
 doc.setUnit(RS.Millimeter);
@@ -26,14 +27,45 @@ doc.setVariable("PageSettings/PaperHeight", 600);
 doc.setVariable("PageSettings/OffsetX", -20);
 doc.setVariable("PageSettings/OffsetY", -580);
 
-include("../library/chimaera.js");
+include("./chimaera.js");
 
-var C = defaultC();
-C.Rev = 4;	// board revision
-//C.Lle = 5;	// length left
-C.Nsu = 9;	// number of sensor units
+// default Configuration
+var C = {
+	Rev : 3,
 
-var op = chimaeraGetOperation(di, C);
+	Lle : 30,		// length left
+	Lsi : 5,		// length side
+	Lsu : 80,		// length sensor unit
+	Hca : 24,		// height case
+	Lri : 69,		// length right
+	Wto : 34,		// width top
+	Wce : 54,		// width center
+	Wbo : 20,		// width bottom
+
+	Mth : 2.5,	// material thickness
+	Mto : 0.1,	// material tolerance
+	Ndi : 3.0,	// nut diameter
+	Nle : 6.0,	// nut length
+	Bhe : 1.8,	// bolt height
+	Bwi : 5.5,	// bolt width
+	Nsu : 6			// number of sensor units
+};
+
+// manually overwrite Configuration
+//C.Rev = 4;	// board revision
+
+// automatically overwrite Configuration with command line arguments
+for(var i=4; i<args.length-1; i+=2) {
+	var k = args[i];
+	var v = args[i+1];
+	if(C[k] !== undefined) {
+		C[k] = v*1.0; // number conversion
+	} else {
+		print("parameter "+k+" undefined");
+	}
+}
+
+var op = chimaera(di, C);
 op.apply(doc);
 
 di.exportFile(output, "DXF 2013");
