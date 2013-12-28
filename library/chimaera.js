@@ -109,7 +109,8 @@ chimaeraGetOperation = function(di, C) {
 		addRef(doc, di, "hole_A", X, y-C.Wce+C.Lsi, 1, -Math.PI/2);
 	}
 
-	var pwd = "/home/hp/omk/hardware/dxf/case/library/";
+	var pwd = getAbsolutePathForArg("../library/");
+	print(pwd);
 	var su16 = pwd+"SU-16_Unit-Rev7.dxf";
 	var dspf3;
 	var ribl;
