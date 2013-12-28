@@ -1,4 +1,6 @@
 /*
+ * Copyright (c) Hanspeter Portner (dev@open-music-kontrollers.ch)
+ *
  * This documentation describes Open Hardware and is licensed under the
  * CERN OHL v.1.2. You may redistribute and modify this documentation
  * under the terms of the CERN OHL v.1.2. (http://ohwr.org/cernohl). This

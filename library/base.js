@@ -1,4 +1,6 @@
 /*
+ * Copyright (c) Hanspeter Portner (dev@open-music-kontrollers.ch)
+ *
  * This documentation describes Open Hardware and is licensed under the
  * CERN OHL v.1.2. You may redistribute and modify this documentation
  * under the terms of the CERN OHL v.1.2. (http://ohwr.org/cernohl). This
@@ -46,12 +48,7 @@ base.getOperation = function(di, C) {
 		[L, -C.Wce],
 		[L, 0]
 	);
-	var line1 = new RPolylineEntity(doc, new RPolylineData());
-	for(var i=0; i<vb1.length; i++)
-		line1.appendVertex(new RVector(vb1[i][0], vb1[i][1]));
-	line1.setClosed(true);
-	line1.setLayerId(cut);
-	op.addObject(line1, false);
+	multiline(doc, op, cut, vb1, true);
 
 	var vb2 = new Array(
 		[L-C.Lsi-C.Mto/2				, -12],
@@ -59,12 +56,7 @@ base.getOperation = function(di, C) {
 		[L-C.Lsi+C.Mth+C.Mto/2	, -44],
 		[L-C.Lsi+C.Mth+C.Mto/2	, -12]
 	);
-	var line2 = new RPolylineEntity(doc, new RPolylineData());
-	for(var i=0; i<vb2.length; i++)
-		line2.appendVertex(new RVector(vb2[i][0], vb2[i][1]));
-	line2.setClosed(true);
-	line2.setLayerId(cut);
-	op.addObject(line2, false);
+	multiline(doc, op, cut, vb2, true);
 
 	var vb3 = new Array(
 		[Ld				, 0],
@@ -74,11 +66,7 @@ base.getOperation = function(di, C) {
 		[Ld				, -C.Wce/2-5],
 		[Ld				, -C.Wce]
 	);
-	var line3 = new RPolylineEntity(doc, new RPolylineData());
-	for(var i=0; i<vb3.length; i++)
-		line3.appendVertex(new RVector(vb3[i][0], vb3[i][1]));
-	line3.setLayerId(cut);
-	op.addObject(line3, false);
+	multiline(doc, op, cut, vb3, false);
 
 	return op;
 }

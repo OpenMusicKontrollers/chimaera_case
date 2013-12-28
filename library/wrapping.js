@@ -1,4 +1,6 @@
 /*
+ * Copyright (c) Hanspeter Portner (dev@open-music-kontrollers.ch)
+ *
  * This documentation describes Open Hardware and is licensed under the
  * CERN OHL v.1.2. You may redistribute and modify this documentation
  * under the terms of the CERN OHL v.1.2. (http://ohwr.org/cernohl). This
@@ -53,12 +55,7 @@ wrapping.getOperation = function(di, C) {
 		[L, -D],
 		[L, 0]
 	);
-	var line1 = new RPolylineEntity(doc, new RPolylineData());
-	for(var i=0; i<vb1.length; i++)
-		line1.appendVertex(new RVector(vb1[i][0], vb1[i][1]));
-	line1.setClosed(true);
-	line1.setLayerId(cut);
-	op.addObject(line1, false);
+	multiline(doc, op, cut, vb1, true);
 
 	var lines = new Array();
 

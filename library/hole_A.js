@@ -1,4 +1,6 @@
 /*
+ * Copyright (c) Hanspeter Portner (dev@open-music-kontrollers.ch)
+ *
  * This documentation describes Open Hardware and is licensed under the
  * CERN OHL v.1.2. You may redistribute and modify this documentation
  * under the terms of the CERN OHL v.1.2. (http://ohwr.org/cernohl). This
@@ -37,18 +39,12 @@ hole_A.getOperation = function(di, C) {
 	var cut = newLayer(doc, di, "cut", 255, 0, 0);
 
 	var vb1 = new Array(
-		new RVector(-C.Mto/2			, 2.5),
-		new RVector(-C.Mto/2			, -2.5),
-		new RVector(C.Mth+C.Mto/2	, -2.5),
-		new RVector(C.Mth+C.Mto/2	, 2.5)
+		[-C.Mto/2			, 2.5],
+		[-C.Mto/2			, -2.5],
+		[C.Mth+C.Mto/2	, -2.5],
+		[C.Mth+C.Mto/2	, 2.5]
 	);
-
-	var line1 = new RPolylineEntity(doc, new RPolylineData());
-	for(var i=0; i<vb1.length; i++)
-		line1.appendVertex(vb1[i]);
-	line1.setClosed(true);
-	line1.setLayerId(cut);
-	op.addObject(line1, false);
+	multiline(doc, op, cut, vb1, true);
 
 	return op;
 }

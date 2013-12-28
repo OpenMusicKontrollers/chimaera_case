@@ -1,4 +1,6 @@
 /*
+ * Copyright (c) Hanspeter Portner (dev@open-music-kontrollers.ch)
+ *
  * This documentation describes Open Hardware and is licensed under the
  * CERN OHL v.1.2. You may redistribute and modify this documentation
  * under the terms of the CERN OHL v.1.2. (http://ohwr.org/cernohl). This
@@ -42,25 +44,26 @@ rib_C.getOperation = function(di, C) {
 	var X3 = X2 - C.Bhe;
 
 	var vb1 = new Array(
-		new RVector(X1			, 0),
-		new RVector(X1			, -7),
-		new RVector(X0			, -7),
-		new RVector(X0			, -12),
-		new RVector(X1			, -12),
-		new RVector(X1			, -20+C.Ndi/2),
-		new RVector(X3			, -20+C.Ndi/2),
-		new RVector(X3			, -20+C.Bwi/2),
-		new RVector(X2			, -20+C.Bwi/2),
-		new RVector(X2			, -20-C.Bwi/2),
-		new RVector(X3			, -20-C.Bwi/2),
-		new RVector(X3			, -20-C.Ndi/2),
-		new RVector(X1			, -20-C.Ndi/2),
-		new RVector(X1			, -28),
-		new RVector(X0			, -28),
-		new RVector(X0			, -33),
-		new RVector(X1			, -33),
-		new RVector(X1			, -54)
+		[X1			, 0],
+		[X1			, -7],
+		[X0			, -7],
+		[X0			, -12],
+		[X1			, -12],
+		[X1			, -20+C.Ndi/2],
+		[X3			, -20+C.Ndi/2],
+		[X3			, -20+C.Bwi/2],
+		[X2			, -20+C.Bwi/2],
+		[X2			, -20-C.Bwi/2],
+		[X3			, -20-C.Bwi/2],
+		[X3			, -20-C.Ndi/2],
+		[X1			, -20-C.Ndi/2],
+		[X1			, -28],
+		[X0			, -28],
+		[X0			, -33],
+		[X1			, -33],
+		[X1			, -54]
 	);
+	multiline(doc, op, cut, vb1, false);
 
 	X0 = 10;
 	X1 = C.Hca;
@@ -69,35 +72,24 @@ rib_C.getOperation = function(di, C) {
 	var X4 = X3 - 2.5;
 
 	var vb2 = new Array(
-		new RVector(X1			, -54),
-		new RVector(X2			, -54),
-		new RVector(X2			, -49-C.Mth-C.Mto/2),
-		new RVector(X0			, -49-C.Mth-C.Mto/2),
-		new RVector(X0			, -49+C.Mto/2),
-		new RVector(X3			, -49+C.Mto/2),
-		new RVector(X3			, -33),
-		new RVector(8				, -41),
-		new RVector(8				, -10),
-		new RVector(X4			, -10), // 3.1 = 1.6+2.5
-		new RVector(X4			, -5-C.Mto/2),
-		new RVector(X0			, -5-C.Mto/2),
-		new RVector(X0			, -5+C.Mth+C.Mto/2),
-		new RVector(X2			, -5+C.Mth+C.Mto/2),
-		new RVector(X2			, 0),
-		new RVector(X1			, 0)
+		[X1			, -54],
+		[X2			, -54],
+		[X2			, -49-C.Mth-C.Mto/2],
+		[X0			, -49-C.Mth-C.Mto/2],
+		[X0			, -49+C.Mto/2],
+		[X3			, -49+C.Mto/2],
+		[X3			, -33],
+		[8				, -41],
+		[8				, -10],
+		[X4			, -10], // 3.1 = 1.6+2.5
+		[X4			, -5-C.Mto/2],
+		[X0			, -5-C.Mto/2],
+		[X0			, -5+C.Mth+C.Mto/2],
+		[X2			, -5+C.Mth+C.Mto/2],
+		[X2			, 0],
+		[X1			, 0]
 	);
-
-	var line1 = new RPolylineEntity(doc, new RPolylineData());
-	for(var i=0; i<vb1.length; i++)
-		line1.appendVertex(vb1[i]);
-	line1.setLayerId(cut);
-	op.addObject(line1, false);
-
-	var line2 = new RPolylineEntity(doc, new RPolylineData());
-	for(var i=0; i<vb2.length; i++)
-		line2.appendVertex(vb2[i]);
-	line2.setLayerId(cut);
-	op.addObject(line2, false);
+	multiline(doc, op, cut, vb2, false);
 
 	var va1 = new RVector(12, 0);
 	var arc1 = new RArcEntity(doc, new RArcData(va1, C.Hca/2, 0.0, Math.PI, false));

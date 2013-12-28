@@ -1,4 +1,6 @@
-/*
+/* 
+ * Copyright (c) Hanspeter Portner (dev@open-music-kontrollers.ch)
+ *
  * This documentation describes Open Hardware and is licensed under the
  * CERN OHL v.1.2. You may redistribute and modify this documentation
  * under the terms of the CERN OHL v.1.2. (http://ohwr.org/cernohl). This
@@ -135,6 +137,43 @@ function explode_text(doc, op, entity) {
 			var e = shapeToEntity(doc, shape);
 			e.setLayerId(layer);
 			op.addObject(e, false);
+		}
+	}
+}
+
+function hasProTools() {
+	for(var i=0; i<RPluginLoader.countPlugins(); i++) {
+		var pluginInfo = RPluginLoader.getPluginInfo(i);
+		if ( (pluginInfo.get("Name") == "Pro Tools") && (!pluginInfo.get("TrialExpired")) )
+			return true;
+	}
+	return false;
+}
+
+function multiline(doc, op, layer, points, closed) {
+	if(hasProTools()) {
+		print("QCAD professional edition detected: using polylines instead of lines");
+		var line = new RPolylineEntity(doc, new RPolylineData());
+		for(var i=0; i<points.length; i++)
+			line.appendVertex(new RVector(points[i][0], points[i][1]));
+		line.setClosed(closed);
+		line.setLayerId(layer);
+		op.addObject(line, false);
+	} else { // !hasProTools()
+		print("QCAD open source edition detected: using lines instead of polylines");
+		for(var i=0; i<points.length-1; i++) {
+			var line = new RLineEntity(doc, new RLineData(
+				new RVector(points[i][0], points[i][1]),
+				new RVector(points[i+1][0], points[i+1][1])));
+			line.setLayerId(layer);
+			op.addObject(line, false);
+		}
+		if(closed) {
+			var line = new RLineEntity(doc, new RLineData(
+				new RVector(points[points.length-1][0], points[points.length-1][1]),
+				new RVector(points[0][0], points[0][1])));
+			line.setLayerId(layer);
+			op.addObject(line, false);
 		}
 	}
 }
