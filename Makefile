@@ -25,16 +25,16 @@ TARGETS += chimaera_S160_2_5mm.dxf
 all: $(TARGETS)
 
 chimaera_S96_2_5mm.dxf: $(ECMA_SOURCES)
-	$(QCAD_BATCH) $< Rev 4 Nsu 6 $(CURDIR)/$@
+	$(QCAD_BATCH) $(CURDIR)/$< Rev 4 Nsu 6 $(CURDIR)/$@
 
 chimaera_S96_3_0mm.dxf: $(ECMA_SOURCES)
-	$(QCAD_BATCH) $< Rev 4 Nsu 6 Mth 3.0 $(CURDIR)/$@
+	$(QCAD_BATCH) $(CURDIR)/$< Rev 4 Nsu 6 Mth 3.0 $(CURDIR)/$@
 
 chimaera_S144_2_5mm.dxf: $(ECMA_SOURCES)
-	$(QCAD_BATCH) $< Rev 4 Nsu 9 $(CURDIR)/$@
+	$(QCAD_BATCH) $(CURDIR)/$< Rev 4 Nsu 9 $(CURDIR)/$@
 
 chimaera_S160_2_5mm.dxf: $(ECMA_SOURCES)
-	$(QCAD_BATCH) $< Rev 4 Nsu 10 Lle 5 $(CURDIR)/$@
+	$(QCAD_BATCH) $(CURDIR)/$< Rev 4 Nsu 10 Lle 5 $(CURDIR)/$@
 
 clean:
 	rm -f $(TARGETS)

@@ -10,7 +10,8 @@
  * conditions.
  */
 
-include("scripts/Modify/Explode/Explode.js");
+include("scripts/library.js");
+include("scripts/ShapeAlgorithms.js");
 
 function newRef(doc, di, dict, C) {
 	for(var key in dict) {

@@ -68,4 +68,4 @@ for(var i=4; i<args.length-1; i+=2) {
 var op = chimaera(di, C);
 op.apply(doc);
 
-di.exportFile(output, "DXF 2013");
+di.exportFile(output, "DXF 2000");
