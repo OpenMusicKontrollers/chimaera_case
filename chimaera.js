@@ -90,18 +90,7 @@ function chimaera(di, C) {
 
 	var pwd = getAbsolutePathForArg("./");
 	var su16 = pwd+"SU-16_Unit-Rev7.dxf";
-	var dspf3;
-	var ribl;
-	switch(C.Rev) {
-		case 3:
-			dspf3 = pwd+"DSP-F3_Unit-Rev3.dxf";
-			ribl = pwd+"rib_D_Rev3_label.dxf";
-			break;
-		case 4:
-			dspf3 = pwd+"DSP-F3_Unit-Rev4.dxf";
-			ribl = pwd+"rib_D_Rev4_label.dxf";
-			break;
-	}
+	var dspf3 = pwd+"DSP-F3_Unit-Rev"+C.Rev+".dxf";
 	var oshw = pwd+"OSHW.dxf";
 
 	for(var i=0; i<C.Nsu; i++) {
@@ -109,44 +98,36 @@ function chimaera(di, C) {
 		importRef(doc, di, "SU-16", su16, X, y-C.Lsi, 1, 0);
 	}
 	importRef(doc, di, "DSP-F3", dspf3, C.Lle+C.Nsu*C.Lsu, y-C.Lsi, 1, 0);
-	y -= 60;
+	y -= 55;
 
 	// side
 	addRef(doc, di, "side", x, y, 1, 0);
-	y -= 30;
+	y -= 25;
 	addRef(doc, di, "side", x, y, 1, 0);
-	y -= 50;
+	y -= 55;
 
 	// ribs
-	addRef(doc, di, "rib_A", x, y, 1, 0);
-	x += 30;
+	x = C.Hca/2;
+	addRef(doc, di, "rib_A", x, y, 1, Math.PI/2);
+	x += C.Hca + C.Wce + 5;
+	var ovr = false;
 	for(var i=0; i<C.Nsu; i++) {
-		addRef(doc, di, "rib_B", x, y, 1, 0);
-		x += 30;
+		addRef(doc, di, "rib_B", x, y, 1, Math.PI/2);
+		x += C.Hca + C.Wce + 5;
+		if( !ovr && (i >= C.Nsu/2) ) {
+			ovr = true;
+			x = C.Hca/2;
+			y -= C.Hca + 5;
+		}
 	}
-	addRef(doc, di, "rib_C", x, y, 1, 0);
-	x += 30;
-	switch(C.Rev) {
-		case 3:
-			addRef(doc, di, "rib_D_Rev3", x, y, 1, 0);
-			break;
-		case 4:
-			addRef(doc, di, "rib_D_Rev4", x, y, 1, 0);
-			break;
-	}
+	addRef(doc, di, "rib_C", x, y, 1, Math.PI/2);
+	x += C.Hca + C.Wce + 5;
+	addRef(doc, di, "rib_D_Rev"+C.Rev, x, y, 1, Math.PI/2);
 
 	// labels
 	addRef(doc, di, "label_omk", C.Lle, -13-(C.Wto-13)/2, 1, 0);
 	importRef(doc, di, "OSHW", oshw, L-20, -13-(C.Wto-13)/2, 1, 0);
 	addRef(doc, di, "label_chim", C.Lle+(C.Nsu+0.5)*C.Lsu+C.Lsi/2, -C.Wto-DD-C.Wce/2, 1, 0);
-	switch(C.Rev) {
-		case 3:
-			importRef(doc, di, "rib_D_Rev3_label", ribl, x+C.Hca/2, y, 1, 0);
-			break;
-		case 4:
-			importRef(doc, di, "rib_D_Rev4_label", ribl, x+C.Hca/2, y-C.Wce, 1, 0);
-			break;
-	}
 
 	return op;
 }

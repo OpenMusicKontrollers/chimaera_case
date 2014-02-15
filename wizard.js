@@ -24,8 +24,8 @@ output = args[args.length-1];
 doc.setUnit(RS.Millimeter);
 doc.setVariable("PageSettings/PaperWidth", 900);
 doc.setVariable("PageSettings/PaperHeight", 600);
-doc.setVariable("PageSettings/OffsetX", -20);
-doc.setVariable("PageSettings/OffsetY", -580);
+doc.setVariable("PageSettings/OffsetX", -5);
+doc.setVariable("PageSettings/OffsetY", -595);
 
 include("./chimaera.js");
 
@@ -48,11 +48,16 @@ var C = {
 	Nle : 6.0,	// nut length
 	Bhe : 1.8,	// bolt height
 	Bwi : 5.5,	// bolt width
-	Nsu : 6			// number of sensor units
+	Nsu : 6,		// number of sensor units
+
+	CE  : 0,		// show CE logo
+	FCC : 0			// show FCC logo
 };
 
 // manually overwrite Configuration
 //C.Rev = 4;	// board revision
+C.CE = 1
+C.FCC = 1
 
 // automatically overwrite Configuration with command line arguments
 for(var i=4; i<args.length-1; i+=2) {
@@ -68,4 +73,4 @@ for(var i=4; i<args.length-1; i+=2) {
 var op = chimaera(di, C);
 op.apply(doc);
 
-di.exportFile(output, "DXF 2000");
+di.exportFile(output);

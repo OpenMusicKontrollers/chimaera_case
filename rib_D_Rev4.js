@@ -16,6 +16,7 @@ function rib_D_Rev4(di, C) {
 	var doc = di.getDocument();
 	var op = new RAddObjectsOperation();
 	var cut = newLayer(doc, di, "cut", 255, 0, 0);
+	var eng = newLayer(doc, di, "engrave", 0, 255, 0);
 
 	var X0 = -C.Mth;
 	var X1 = 0;
@@ -113,6 +114,88 @@ function rib_D_Rev4(di, C) {
 	var arc5 = new RCircleEntity(doc, new RCircleData(va5, 1.5));
 	arc5.setLayerId(cut);
 	op.addObject(arc5, false);
+
+	// engravings
+	var pos1 = new RVector(19-C.Mth, -5 - 44 - C.Mth - 1);
+	var txt1 = new RTextEntity(doc, new RTextData(
+		pos1, pos1,
+		2, 2,
+		RS.VAlignMiddle, RS.HAlignLeft, RS.LeftToRight, RS.Exact, 1.0,
+		"RESET", "CourierCad",
+		true, false, -Math.PI/2, true));
+	txt1.setLayerId(eng);
+	explode_text(doc, op, txt1);
+
+	var pos2 = new RVector(15-C.Mth, -5 - 44 - C.Mth - 1);
+	var txt2 = new RTextEntity(doc, new RTextData(
+		pos2, pos2,
+		2, 2,
+		RS.VAlignMiddle, RS.HAlignLeft, RS.LeftToRight, RS.Exact, 1.0,
+		"FLASH", "CourierCad",
+		true, false, -Math.PI/2, true));
+	txt2.setLayerId(eng);
+	explode_text(doc, op, txt2);
+
+	var Y = -5 - 44;
+	var pos3 = new RVector(7, Y);
+	var txt3 = new RTextEntity(doc, new RTextData(
+		pos3, pos3,
+		2, 2,
+		RS.VAlignMiddle, RS.HAlignCenter, RS.LeftToRight, RS.Exact, 1.0,
+		"6 V DC", "CourierCad",
+		true, false, -Math.PI/2, true));
+	txt3.setLayerId(eng);
+	explode_text(doc, op, txt3);
+
+	var va6 = new RVector(4, Y);
+	var arc6 = new RCircleEntity(doc, new RCircleData(va6, 0.5));
+	arc6.setLayerId(eng);
+	op.addObject(arc6, false);
+
+	var va7 = new RVector(4, Y+3);
+	var arc7 = new RCircleEntity(doc, new RCircleData(va7, 1));
+	arc7.setLayerId(eng);
+	op.addObject(arc7, false);
+
+	var va8 = new RVector(4, Y-3);
+	var arc8 = new RCircleEntity(doc, new RCircleData(va8, 1));
+	arc8.setLayerId(eng);
+	op.addObject(arc8, false);
+
+	var va9 = new RVector(4, Y);
+	var arc9 = new RArcEntity(doc, new RArcData(va9, 1, 0, Math.PI));
+	arc9.setLayerId(eng);
+	op.addObject(arc9, false);
+
+	var l1 = new RLineEntity(doc, new RLineData(
+		new RVector(4, Y+1),
+		new RVector(4, Y+2)));
+	l1.setLayerId(eng);
+	op.addObject(l1, false);
+
+	var l2 = new RLineEntity(doc, new RLineData(
+		new RVector(4, Y-0.5),
+		new RVector(4, Y-2)));
+	l2.setLayerId(eng);
+	op.addObject(l2, false);
+
+	var l3 = new RLineEntity(doc, new RLineData(
+		new RVector(4, Y+3+0.5),
+		new RVector(4, Y+3-0.5)));
+	l3.setLayerId(eng);
+	op.addObject(l3, false);
+
+	var l4 = new RLineEntity(doc, new RLineData(
+		new RVector(4, Y-3+0.5),
+		new RVector(4, Y-3-0.5)));
+	l4.setLayerId(eng);
+	op.addObject(l4, false);
+
+	var l5 = new RLineEntity(doc, new RLineData(
+		new RVector(4-0.5, Y-3),
+		new RVector(4+0.5, Y-3)));
+	l5.setLayerId(eng);
+	op.addObject(l5, false);
 
 	return op;
 }

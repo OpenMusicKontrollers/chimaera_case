@@ -16,6 +16,7 @@ function rib_A(di, C) {
 	var doc = di.getDocument();
 	var op = new RAddObjectsOperation();
 	var cut = newLayer(doc, di, "cut", 255, 0, 0);
+	var eng = newLayer(doc, di, "engrave", 0, 255, 0);
 
 	var X0 = 0;
 	var X1 = C.Mth;
@@ -81,6 +82,62 @@ function rib_A(di, C) {
 	var arc2 = new RArcEntity(doc, new RArcData(va2, C.Hca/2, Math.PI, 0, false));
 	arc2.setLayerId(cut);
 	op.addObject(arc2, false);
+
+	if(C.CE) {
+		var X = C.Hca/2;
+		var Y = -C.Wce/3;
+		var radius = 5/2;
+
+		var va3 = new RVector(X, Y);
+		var arc3 = new RArcEntity(doc, new RArcData(va3, radius, -0.1, -Math.PI+0.1, false));
+		arc3.setLayerId(eng);
+		op.addObject(arc3, false);
+
+		var va4 = new RVector(X, Y-radius*2);
+		var arc4 = new RArcEntity(doc, new RArcData(va4, radius, -0.1, -Math.PI-0.1, false));
+		arc4.setLayerId(eng);
+		op.addObject(arc4, false);
+
+		var l1 = new RLineEntity(doc, new RLineData(
+			new RVector(X, Y-radius),
+			new RVector(X, Y-radius*1.9)));
+		l1.setLayerId(eng);
+		op.addObject(l1, false);
+	}
+
+	if(C.FCC) {
+		var X = C.Hca/2;
+		var Y = -C.Wce/3*2;
+		var radius = 5/2;
+
+		var va3 = new RVector(X, Y);
+		var arc3 = new RArcEntity(doc, new RArcData(va3, radius, -0.9, -Math.PI+0.9, false));
+		arc3.setLayerId(eng);
+		op.addObject(arc3, false);
+
+		var va4 = new RVector(X, Y);
+		var arc4 = new RArcEntity(doc, new RArcData(va4, radius/2, -0.9, -Math.PI+0.9, false));
+		arc4.setLayerId(eng);
+		op.addObject(arc4, false);
+
+		var l1 = new RLineEntity(doc, new RLineData(
+			new RVector(X-radius, Y+radius*1.5),
+			new RVector(X+radius, Y+radius*1.5)));
+		l1.setLayerId(eng);
+		op.addObject(l1, false);
+
+		var l2 = new RLineEntity(doc, new RLineData(
+			new RVector(X, Y+radius*1.5),
+			new RVector(X, Y+radius)));
+		l2.setLayerId(eng);
+		op.addObject(l2, false);
+
+		var l3 = new RLineEntity(doc, new RLineData(
+			new RVector(X+radius, Y+radius*1.5),
+			new RVector(X+radius, Y+radius*0.8)));
+		l3.setLayerId(eng);
+		op.addObject(l3, false);
+	}
 
 	return op;
 }

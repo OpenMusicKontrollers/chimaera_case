@@ -22,6 +22,7 @@ function keys(di, C) {
 	var L = Ln+C.Lsi;
 
 	// engraving
+	/*
 	var lines = new Array(
 		[ [0, 0]						, [La, 0] ],
 		[ [0, -20]					, [La, -20] ],
@@ -30,15 +31,44 @@ function keys(di, C) {
 	);
 
 	var K = C.Nsu * 16/3;
-	//TODO K % 3 ?
 
 	for(var i=0; i<K; i++) {
 		var x = i*15;
-		lines.push([ [x, 0]				, [x, -C.Wce] ]);
-		lines.push([ [x+5, -20]		, [x+5, -C.Wce+20] ]);
-		lines.push([ [x+10, -20]	, [x+10, -C.Wce+20] ]);
+		if(x<La)
+			lines.push([ [x, 0]				, [x, -C.Wce] ]);
+		if(x+5<La)
+			lines.push([ [x+5, -20]		, [x+5, -C.Wce+20] ]);
+		if(x+10<La)
+			lines.push([ [x+10, -20]	, [x+10, -C.Wce+20] ]);
 	}
 	lines.push([ [La, 0]		, [La, -C.Wce] ]);
+	*/
+
+	var lines = new Array(
+		[ [0, -20]					, [La, -20] ],
+		[ [0, -C.Wce+20]		, [La, -C.Wce+20] ]
+	);
+	var K = C.Nsu * 16/3;
+	var x = 0;
+
+	if(C.Nsu%3 == 2) {
+		lines.push([ [x, -20]		, [x, -C.Wce+20] ]);
+		x+=5;
+	}
+
+	for(; x<La; x+=15) {
+		if(x<La)
+			lines.push([ [x, -20]				, [x, -C.Wce+20] ]);
+		if(x+5<La) {
+			lines.push([ [x+5, 0]				, [x+5, -C.Wce] ]);
+			lines.push([ [x+5, 0]				, [x+10, 0] ]);
+			lines.push([ [x+5, -C.Wce]	, [x+10, -C.Wce] ]);
+		}
+		if(x+10<La)
+			lines.push([ [x+10, 0]			, [x+10, -C.Wce] ]);
+	}
+
+	lines.push([ [La, -20]		, [La, -C.Wce+20] ]);
 
 	for(var i=0; i<lines.length; i++) {
 		var l1 = new RLineEntity(doc, new RLineData(

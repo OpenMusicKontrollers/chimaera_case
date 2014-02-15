@@ -16,25 +16,65 @@ ECMA_SOURCES += side.js
 ECMA_SOURCES += wrapping.js
 
 QCAD_BATCH := qcad -allow-multiple-instances -autostart
+XSLTPROC := xsltproc
 
-TARGETS := chimaera_S96_2_5mm.dxf
-TARGETS += chimaera_S96_3_0mm.dxf
-TARGETS += chimaera_S144_2_5mm.dxf
-TARGETS += chimaera_S160_2_5mm.dxf
+TARGETS := chimaera_S48_2.0mm.dxf		chimaera_S48_2.5mm.dxf	chimaera_S48_3.0mm.dxf
+TARGETS += chimaera_S64_2.0mm.dxf		chimaera_S64_2.5mm.dxf	chimaera_S64_3.0mm.dxf
+TARGETS += chimaera_S80_2.0mm.dxf		chimaera_S80_2.5mm.dxf	chimaera_S80_3.0mm.dxf
+TARGETS += chimaera_S96_2.0mm.dxf		chimaera_S96_2.5mm.dxf	chimaera_S96_3.0mm.dxf
+TARGETS += chimaera_S112_2.0mm.dxf	chimaera_S112_2.5mm.dxf	chimaera_S112_3.0mm.dxf
+TARGETS += chimaera_S128_2.0mm.dxf	chimaera_S128_2.5mm.dxf	chimaera_S128_3.0mm.dxf
+TARGETS += chimaera_S144_2.0mm.dxf	chimaera_S144_2.5mm.dxf
+TARGETS += chimaera_S160_2.0mm.dxf	chimaera_S160_2.5mm.dxf
+
+PONOKO := chimaera_S48_2.0mm.svg		chimaera_S48_2.5mm.svg	chimaera_S48_3.0mm.svg
+PONOKO += chimaera_S64_2.0mm.svg		chimaera_S64_2.5mm.svg	chimaera_S64_3.0mm.svg
+PONOKO += chimaera_S80_2.0mm.svg		chimaera_S80_2.5mm.svg	chimaera_S80_3.0mm.svg
+PONOKO += chimaera_S96_2.0mm.svg		chimaera_S96_2.5mm.svg	chimaera_S96_3.0mm.svg
+PONOKO += chimaera_S112_2.0mm.svg		chimaera_S112_2.5mm.svg	chimaera_S112_3.0mm.svg
+PONOKO += chimaera_S128_2.0mm.svg		chimaera_S128_2.5mm.svg	chimaera_S128_3.0mm.svg
+
+P2_WIDTH := 384
+P2_HEIGHT := 384
+P3_WIDTH := 790
+P3_HEIGHT := 384
 
 all: $(TARGETS)
 
-chimaera_S96_2_5mm.dxf: $(ECMA_SOURCES)
-	$(QCAD_BATCH) $(CURDIR)/$< Rev 4 Nsu 6 $(CURDIR)/$@
+ponoko: $(PONOKO)
 
-chimaera_S96_3_0mm.dxf: $(ECMA_SOURCES)
-	$(QCAD_BATCH) $(CURDIR)/$< Rev 4 Nsu 6 Mth 3.0 $(CURDIR)/$@
+chimaera_S48_%.svg: ponoko.xslt chimaera_S48_%.dxf.svg
+	$(XSLTPROC) --stringparam new_width $(P2_WIDTH) --stringparam new_height $(P2_HEIGHT) -o $@ $+
 
-chimaera_S144_2_5mm.dxf: $(ECMA_SOURCES)
-	$(QCAD_BATCH) $(CURDIR)/$< Rev 4 Nsu 9 $(CURDIR)/$@
+%.svg: ponoko.xslt %.dxf.svg
+	$(XSLTPROC) --stringparam new_width $(P3_WIDTH) --stringparam new_height $(P3_HEIGHT) -o $@ $+
 
-chimaera_S160_2_5mm.dxf: $(ECMA_SOURCES)
-	$(QCAD_BATCH) $(CURDIR)/$< Rev 4 Nsu 10 Lle 5 $(CURDIR)/$@
+%.dxf.svg: %.dxf ponoko.js
+	$(QCAD_BATCH) $(CURDIR)/ponoko.js $(CURDIR)/$< $(CURDIR)/$@
+
+chimaera_S48_%mm.dxf: $(ECMA_SOURCES)
+	$(QCAD_BATCH) $(CURDIR)/$< Rev 4 Nsu 3 Mth $* $(CURDIR)/$@
+
+chimaera_S64_%mm.dxf: $(ECMA_SOURCES)
+	$(QCAD_BATCH) $(CURDIR)/$< Rev 4 Nsu 4 Mth $* $(CURDIR)/$@
+
+chimaera_S80_%mm.dxf: $(ECMA_SOURCES)
+	$(QCAD_BATCH) $(CURDIR)/$< Rev 4 Nsu 5 Mth $* $(CURDIR)/$@
+
+chimaera_S96_%mm.dxf: $(ECMA_SOURCES)
+	$(QCAD_BATCH) $(CURDIR)/$< Rev 4 Nsu 6 Mth $* $(CURDIR)/$@
+
+chimaera_S112_%mm.dxf: $(ECMA_SOURCES)
+	$(QCAD_BATCH) $(CURDIR)/$< Rev 4 Nsu 7 Mth $* $(CURDIR)/$@
+
+chimaera_S128_%mm.dxf: $(ECMA_SOURCES)
+	$(QCAD_BATCH) $(CURDIR)/$< Rev 4 Nsu 8 Mth $* $(CURDIR)/$@
+
+chimaera_S144_%mm.dxf: $(ECMA_SOURCES)
+	$(QCAD_BATCH) $(CURDIR)/$< Rev 4 Nsu 9 Mth $* $(CURDIR)/$@
+
+chimaera_S160_%mm.dxf: $(ECMA_SOURCES)
+	$(QCAD_BATCH) $(CURDIR)/$< Rev 4 Nsu 10 Mth $* Lle 5 $(CURDIR)/$@
 
 clean:
-	rm -f $(TARGETS)
+	rm -f $(TARGETS) $(PONOKO)
