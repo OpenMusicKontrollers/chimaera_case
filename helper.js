@@ -55,6 +55,16 @@ function addRef(doc, di, key, x, y, s, a) {
 	di.applyOperation(op);
 }
 
+function getBox(doc, key) {
+	var pos = new RVector(0, 0);
+	var scale = new RVector(1, 1);
+	var angle = 0;
+
+	var id = doc.getBlockId(key);
+	var ref = new RBlockReferenceEntity(doc, new RBlockReferenceData(id, pos, scale, angle));
+	return ref.getBoundingBox();
+}
+
 function newLayer(doc, di, name, r, g, b) {
 	if (doc.hasLayer(name))
 		return doc.getLayerId(name);

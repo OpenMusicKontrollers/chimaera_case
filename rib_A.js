@@ -22,27 +22,32 @@ function rib_A(di, C) {
 	var X1 = C.Mth;
 	var X2 = C.Hca - 10;
 
+	var Y0 = C.Wbo - C.Who;
+	var Y1 = Y0 + C.Lho;
+	var Y2 = C.Wce - Y0;
+	var Y3 = Y2 - C.Lho;
+
 	var vb1 = new Array(
 		[X0			, -0],
 		[X1			, -0],
-		[X1			, -5+C.Mth+C.Mto/2],
-		[X2			, -5+C.Mth+C.Mto/2],
-		[X2			, -5-C.Mto/2],
-		[X1			, -5-C.Mto/2],
-		[X1			, -12],
-		[X0			, -12],
-		[X0			, -17],
-		[X1			, -17],
-		[X1			, -37],
-		[X0			, -37],
-		[X0			, -42],
-		[X1			, -42],
-		[X1			, -49+C.Mto/2],
-		[X2			, -49+C.Mto/2],
-		[X2			, -49-C.Mth-C.Mto/2],
-		[X1			, -49-C.Mth-C.Mto/2],
-		[X1			, -54],
-		[X0			, -54]
+		[X1			, -C.Lsi+C.Mth+C.Mto],
+		[X2			, -C.Lsi+C.Mth+C.Mto],
+		[X2			, -C.Lsi],
+		[X1			, -C.Lsi],
+		[X1			, -Y0],
+		[X0			, -Y0],
+		[X0			, -Y1],
+		[X1			, -Y1],
+		[X1			, -Y3],
+		[X0			, -Y3],
+		[X0			, -Y2],
+		[X1			, -Y2],
+		[X1			, -C.Wce+C.Lsi],
+		[X2			, -C.Wce+C.Lsi],
+		[X2			, -C.Wce+C.Lsi-C.Mth-C.Mto],
+		[X1			, -C.Wce+C.Lsi-C.Mth-C.Mto],
+		[X1			, -C.Wce],
+		[X0			, -C.Wce]
 	);
 	multiline(doc, op, cut, vb1, false);
 
@@ -51,35 +56,39 @@ function rib_A(di, C) {
 	X2 = X1 - C.Nle;
 	var X3 = X2 + C.Bhe;
 
+	var Y0 = C.Wbo - C.Who - C.Lho;
+	var Y1 = Y0 + C.Lho;
+	var Y2 = Y1 + C.Who;
+	var Y3 = Y2 + C.Who;
+	var Y4 = Y3 + C.Lho;
+
 	var vb2 = new Array(
-		[X0			, -54],
-		[X0			, -33],
-		[X1			, -33],
-		[X1			, -28],
-		[X0			, -28],
-		[X0			, -20-C.Ndi/2],
-		[X3			, -20-C.Ndi/2],
-		[X3			, -20-C.Bwi/2],
-		[X2			, -20-C.Bwi/2],
-		[X2			, -20+C.Bwi/2],
-		[X3			, -20+C.Bwi/2],
-		[X3			, -20+C.Ndi/2],
-		[X0			, -20+C.Ndi/2],
-		[X0			, -12],
-		[X1			, -12],
-		[X1			, -7],
-		[X0			, -7],
+		[X0			, -C.Wce],
+		[X0			, -Y4],
+		[X1			, -Y4],
+		[X1			, -Y3],
+		[X0			, -Y3],
+		[X0			, -Y2-C.Ndi/2],
+		[X3			, -Y2-C.Ndi/2],
+		[X3			, -Y2-C.Bwi/2],
+		[X2			, -Y2-C.Bwi/2],
+		[X2			, -Y2+C.Bwi/2],
+		[X3			, -Y2+C.Bwi/2],
+		[X3			, -Y2+C.Ndi/2],
+		[X0			, -Y2+C.Ndi/2],
+		[X0			, -Y1],
+		[X1			, -Y1],
+		[X1			, -Y0],
+		[X0			, -Y0],
 		[X0			, -0]
 	);
 	multiline(doc, op, cut, vb2, false);
 
-	var va1 = new RVector(12, 0);
-	var arc1 = new RArcEntity(doc, new RArcData(va1, C.Hca/2, 0.0, Math.PI, false));
+	var arc1 = rib_arc_top(di, C);
 	arc1.setLayerId(cut);
 	op.addObject(arc1, false);
 
-	var va2 = new RVector(12, -54);
-	var arc2 = new RArcEntity(doc, new RArcData(va2, C.Hca/2, Math.PI, 0, false));
+	var arc2 = rib_arc_bottom(di, C);
 	arc2.setLayerId(cut);
 	op.addObject(arc2, false);
 

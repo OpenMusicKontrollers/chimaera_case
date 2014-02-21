@@ -27,13 +27,16 @@ function base(di, C) {
 		[L, -C.Wce],
 		[L, 0]
 	);
-	multiline(doc, op, cut, vb1, true);
+	multiline(doc, op, cut, vb1, false);
+
+	var Y0 = C.Wbo-C.Who;
+	var Y1 = C.Wce - Y0;
 
 	var vb2 = new Array(
-		[L-C.Lsi-C.Mto/2				, -12],
-		[L-C.Lsi-C.Mto/2				, -44],
-		[L-C.Lsi+C.Mth+C.Mto/2	, -44],
-		[L-C.Lsi+C.Mth+C.Mto/2	, -12]
+		[L-C.Lsi							, -Y0],
+		[L-C.Lsi							, -Y1],
+		[L-C.Lsi+C.Mth+C.Mto	, -Y1],
+		[L-C.Lsi+C.Mth+C.Mto	, -Y0]
 	);
 	multiline(doc, op, cut, vb2, true);
 

@@ -36,28 +36,29 @@ var C = {
 	Lle : 30,		// length left
 	Lsi : 5,		// length side
 	Lsu : 80,		// length sensor unit
+	Lho : 5,		// length of hole_B
 	Hca : 24,		// height case
 	Lri : 69,		// length right
 	Wto : 34,		// width top
 	Wce : 54,		// width center
 	Wbo : 20,		// width bottom
+	Who : 8,		// width to hole
+	Wsu : 30,		// width sensor unit
 
 	Mth : 2.5,	// material thickness
 	Mto : 0.1,	// material tolerance
 	Ndi : 3.0,	// nut diameter
 	Nle : 6.0,	// nut length
-	Bhe : 1.8,	// bolt height
-	Bwi : 5.5,	// bolt width
+	Bhe : 1.7,	// bolt height
+	Bwi : 5.4,	// bolt width
 	Nsu : 6,		// number of sensor units
 
-	CE  : 0,		// show CE logo
-	FCC : 0			// show FCC logo
+	CE  : 1,		// show CE logo
+	FCC : 1			// show FCC logo
 };
 
 // manually overwrite Configuration
 //C.Rev = 4;	// board revision
-C.CE = 1
-C.FCC = 1
 
 // automatically overwrite Configuration with command line arguments
 for(var i=4; i<args.length-1; i+=2) {

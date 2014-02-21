@@ -18,52 +18,28 @@ function rib_D_Rev3(di, C) {
 	var cut = newLayer(doc, di, "cut", 255, 0, 0);
 	var eng = newLayer(doc, di, "engrave", 0, 255, 0);
 
-	var X0 = -C.Mth;
-	var X1 = 0;
-	var X2 = X0 + C.Nle;
-	var X3 = X2 - C.Bhe;
-
-	var vb1 = new Array(
-		[X1			, 0],
-		[X1			, -7],
-		[X0			, -7],
-		[X0			, -12],
-		[X1			, -12],
-		[X1			, -20+C.Ndi/2],
-		[X3			, -20+C.Ndi/2],
-		[X3			, -20+C.Bwi/2],
-		[X2			, -20+C.Bwi/2],
-		[X2			, -20-C.Bwi/2],
-		[X3			, -20-C.Bwi/2],
-		[X3			, -20-C.Ndi/2],
-		[X1			, -20-C.Ndi/2],
-		[X1			, -28],
-		[X0			, -28],
-		[X0			, -33],
-		[X1			, -33],
-		[X1			, -54]
-	);
+	var vb1 = rib_head(di, C);
 	multiline(doc, op, cut, vb1, false);
 
-	X0 = 10;
-	X1 = C.Hca;
-	X2 = X1 - C.Mth;
+	var X0 = 10;
+	var X1 = C.Hca;
+	var X2 = X1 - C.Mth;
 
 	var vb2 = new Array(
-		[X1			, -54],
-		[X2			, -54],
-		[X2			, -49-C.Mth-C.Mto/2],
-		[X0			, -49-C.Mth-C.Mto/2],
-		[X0			, -49+C.Mto/2],
-		[X2			, -49+C.Mto/2],
+		[X1			, -C.Wce],
+		[X2			, -C.Wce],
+		[X2			, -C.Wce+C.Lsi-C.Mth-C.Mto],
+		[X0			, -C.Wce+C.Lsi-C.Mth-C.Mto],
+		[X0			, -C.Wce+C.Lsi],
+		[X2			, -C.Wce+C.Lsi],
 		[X2			, -44],
 		[X1			, -44],
 		[X1			, -12],
 		[X2			, -12],
-		[X2			, -5-C.Mto/2],
-		[X0			, -5-C.Mto/2],
-		[X0			, -5+C.Mth+C.Mto/2],
-		[X2			, -5+C.Mth+C.Mto/2],
+		[X2			, -C.Lsi],
+		[X0			, -C.Lsi],
+		[X0			, -C.Lsi+C.Mth+C.Mto],
+		[X2			, -C.Lsi+C.Mth+C.Mto],
 		[X2			, 0],
 		[X1			, 0]
 	);
@@ -87,13 +63,11 @@ function rib_D_Rev3(di, C) {
 	);
 	multiline(doc, op, cut, vb4, true);
 
-	var va1 = new RVector(12, 0);
-	var arc1 = new RArcEntity(doc, new RArcData(va1, C.Hca/2, 0.0, Math.PI, false));
+	var arc1 = rib_arc_top(di, C);
 	arc1.setLayerId(cut);
 	op.addObject(arc1, false);
 
-	var va2 = new RVector(12, -54);
-	var arc2 = new RArcEntity(doc, new RArcData(va2, C.Hca/2, Math.PI, 0, false));
+	var arc2 = rib_arc_bottom(di, C);
 	arc2.setLayerId(cut);
 	op.addObject(arc2, false);
 

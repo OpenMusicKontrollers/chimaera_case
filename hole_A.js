@@ -18,10 +18,10 @@ function hole_A(di, C) {
 	var cut = newLayer(doc, di, "cut", 255, 0, 0);
 
 	var vb1 = new Array(
-		[-C.Mto/2			, 2.5],
-		[-C.Mto/2			, -2.5],
-		[C.Mth+C.Mto/2	, -2.5],
-		[C.Mth+C.Mto/2	, 2.5]
+		[0						, C.Lho/2],
+		[0						, -C.Lho/2],
+		[C.Mth+C.Mto	, -C.Lho/2],
+		[C.Mth+C.Mto	, C.Lho/2]
 	);
 	multiline(doc, op, cut, vb1, true);
 

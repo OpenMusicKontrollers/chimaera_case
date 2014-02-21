@@ -10,9 +10,9 @@
  * conditions.
  */
 
-include("scripts/Pro/ImportExport/SvgExporter/SvgExporterPG.js");
+include("scripts/File/Print/Print.js");
 
-qApp.applicationName = "Chimaera Ponoko Exporter";
+qApp.applicationName = "Chimaera digitalwerkstatt.ch Exporter";
 var storage = new RMemoryStorage();
 var spatialIndex = new RSpatialIndexNavel();
 var doc = new RDocument(storage, spatialIndex);
@@ -32,15 +32,7 @@ var layerids = doc.queryAllLayers();
 for(var i=0; i<layerids.length; i++) {
 	var layer = doc.queryLayer(layerids[i]);
 
-	if(layer.getName() === "cut") {
-		layer.setColor(new RColor("#0000ff"));
-		op.addObject(layer);
-	} else if(layer.getName() === "engrave") {
-		layer.setColor(new RColor("#ff0000")); // heavy engraving
-		//layer.setColor(new RColor("#00ff00")); // medium engraving
-		//layer.setColor(new RColor("#ff00ff")); // light engraving
-		op.addObject(layer);
-	} else if(layer.getName() === "PCB") {
+	if(layer.getName() === "PCB") {
 		layer.setColor(new RColor("#ffff00"));
 		layer.setFrozen(true); // hide
 		op.addObject(layer);
@@ -48,5 +40,9 @@ for(var i=0; i<layerids.length; i++) {
 }
 di.applyOperation(op);
 
-var exporter = new SvgExporterPG(doc, {"scale": "1:1"});
-exporter.exportFile(output);
+var scene = new RGraphicsSceneQt(di);
+var view = new RGraphicsViewImage();
+view.setScene(scene);
+
+var print = new Print(undefined, doc, view);
+print.print(output);

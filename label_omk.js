@@ -18,7 +18,7 @@ function label_omk(di, C) {
 	var eng = newLayer(doc, di, "engrave", 0, 255, 0);
 
 	var zero = new RVector(0, 0);
-	var size = 8.0;
+	var size = 4.0;
 
 	var txt = new RTextEntity(doc, new RTextData(
 		zero, zero,

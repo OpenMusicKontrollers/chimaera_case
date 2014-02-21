@@ -65,23 +65,23 @@ function chimaera(di, C) {
 	
 	// wrapping
 	addRef(doc, di, "wrapping", 0, 0, 1, 0);
-	addRef(doc, di, "hole_B", C.Lsi-C.Mth/2, -D, 1, 0);
-	addRef(doc, di, "hole_B", C.Lsi-C.Mth/2, 0, 1, Math.PI);
+	addRef(doc, di, "hole_B", C.Lsi-C.Mth/2-C.Mto/2, -D, 1, 0);
+	addRef(doc, di, "hole_B", C.Lsi-C.Mth/2-C.Mto/2, 0, 1, Math.PI);
 	for(var i=0; i<C.Nsu; i++) {
-		addRef(doc, di, "hole_B", C.Lle+16+i*C.Lsu, -D, 1, 0);
-		addRef(doc, di, "hole_B", C.Lle+16+i*C.Lsu, 0, 1, Math.PI);
+		addRef(doc, di, "hole_B", C.Lle+16+i*C.Lsu, -D, 1, 0); //TODO 16
+		addRef(doc, di, "hole_B", C.Lle+16+i*C.Lsu, 0, 1, Math.PI); //TODO 16
 	}
 	addRef(doc, di, "hole_B", C.Lle+16+(C.Nsu-1)*C.Lsu+C.Lri, -D, 1, 0);
 	addRef(doc, di, "hole_B", C.Lle+16+(C.Nsu-1)*C.Lsu+C.Lri, 0, 1, Math.PI);
-	addRef(doc, di, "hole_B", L-C.Lsi+C.Mth/2, -D, 1, 0);
-	addRef(doc, di, "hole_B", L-C.Lsi+C.Mth/2, 0, 1, Math.PI);
+	addRef(doc, di, "hole_B", L-C.Lsi+C.Mth/2+C.Mto/2, -D, 1, 0);
+	addRef(doc, di, "hole_B", L-C.Lsi+C.Mth/2+C.Mto/2, 0, 1, Math.PI);
 	addRef(doc, di, "keys", C.Lle, -C.Wto-DD, 1, 0);
-	y -= 200;
+	y -= getBox(doc, "wrapping").getHeight();
 
 	// base
 	addRef(doc, di, "base", x, y, 1, 0);
-	addRef(doc, di, "hole_A", C.Lsi, y-14.5, 1, Math.PI);
-	addRef(doc, di, "hole_A", C.Lsi, y-39.5, 1, Math.PI);
+	addRef(doc, di, "hole_A", C.Lsi, y-(C.Wbo-C.Who+C.Lho/2), 1, Math.PI);
+	addRef(doc, di, "hole_A", C.Lsi, y-(C.Wce-(C.Wbo-C.Who)-C.Lho/2), 1, Math.PI);
 	for(var i=0; i<=C.Nsu; i++) {
 		var X = C.Lle+C.Lsu/2+i*C.Lsu;
 		addRef(doc, di, "hole_A", X, y-C.Lsi, 1, Math.PI/2);
@@ -92,19 +92,21 @@ function chimaera(di, C) {
 	var su16 = pwd+"SU-16_Unit-Rev7.dxf";
 	var dspf3 = pwd+"DSP-F3_Unit-Rev"+C.Rev+".dxf";
 	var oshw = pwd+"OSHW.dxf";
+	var omk = pwd+"OMK.dxf";
 
 	for(var i=0; i<C.Nsu; i++) {
 		var X = C.Lle+i*C.Lsu;
 		importRef(doc, di, "SU-16", su16, X, y-C.Lsi, 1, 0);
 	}
 	importRef(doc, di, "DSP-F3", dspf3, C.Lle+C.Nsu*C.Lsu, y-C.Lsi, 1, 0);
-	y -= 55;
+	y -= getBox(doc, "base").getHeight();
 
 	// side
 	addRef(doc, di, "side", x, y, 1, 0);
-	y -= 25;
+	y -= getBox(doc, "side").getHeight() - C.Mth;
 	addRef(doc, di, "side", x, y, 1, 0);
-	y -= 55;
+	y -= getBox(doc, "side").getHeight();
+	y -= getBox(doc, "rib_A").getWidth();
 
 	// ribs
 	x = C.Hca/2;
@@ -117,7 +119,7 @@ function chimaera(di, C) {
 		if( !ovr && (i >= C.Nsu/2) ) {
 			ovr = true;
 			x = C.Hca/2;
-			y -= C.Hca + 5;
+			y -= getBox(doc, "rib_A").getWidth();
 		}
 	}
 	addRef(doc, di, "rib_C", x, y, 1, Math.PI/2);
@@ -125,9 +127,13 @@ function chimaera(di, C) {
 	addRef(doc, di, "rib_D_Rev"+C.Rev, x, y, 1, Math.PI/2);
 
 	// labels
-	addRef(doc, di, "label_omk", C.Lle, -13-(C.Wto-13)/2, 1, 0);
-	importRef(doc, di, "OSHW", oshw, L-20, -13-(C.Wto-13)/2, 1, 0);
-	addRef(doc, di, "label_chim", C.Lle+(C.Nsu+0.5)*C.Lsu+C.Lsi/2, -C.Wto-DD-C.Wce/2, 1, 0);
+	y = -C.Who - C.Lho - (C.Wto - C.Who - C.Lho)/2;
+	importRef(doc, di, "OSHW", oshw, L-C.Lsi-15, y, 1, 0);
+	addRef(doc, di, "label_omk", C.Lle, y, 1, 0);
+	addRef(doc, di, "label_chim", C.Lle+C.Lsu, y, 1, 0);
+
+	y = -C.Wto - DD - C.Wce/2;
+	importRef(doc, di, "OMK", omk, L-C.Lsi-15, y, 1, Math.PI/2);
 
 	return op;
 }

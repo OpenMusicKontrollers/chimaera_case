@@ -23,20 +23,11 @@ function label_chim(di, C) {
 	var txt1 = new RTextEntity(doc, new RTextData(
 		zero, new RVector(0, -1),
 		size, size,
-		RS.VAlignTop, RS.HAlignCenter, RS.LeftToRight, RS.Exact, 1.0,
-		"CHIMAERA", "Berenika",
+		RS.VAlignMiddle, RS.HAlignLeft, RS.LeftToRight, RS.Exact, 1.0,
+		"CHIMAERA S-" + C.Nsu*16, "Berenika",
 		true, false, 0, true));
 	txt1.setLayerId(eng);
 	explode_text(doc, op, txt1);
-
-	var txt2 = new RTextEntity(doc, new RTextData(
-		zero, new RVector(0, 1),
-		size, size,
-		RS.VAlignTop, RS.HAlignCenter, RS.LeftToRight, RS.Exact, 1.0,
-		"S-" + C.Nsu*16, "Berenika",
-		true, false, Math.PI, true));
-	txt2.setLayerId(eng);
-	explode_text(doc, op, txt2);
 
 	return op;
 }

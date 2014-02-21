@@ -17,58 +17,55 @@ function keys(di, C) {
 	var op = new RAddObjectsOperation();
 	var eng = newLayer(doc, di, "engrave", 0, 255, 0);
 
-	var La = C.Nsu*C.Lsu;
-	var Ln = (C.Nsu+1)*C.Lsu;
-	var L = Ln+C.Lsi;
-
-	// engraving
-	/*
 	var lines = new Array(
-		[ [0, 0]						, [La, 0] ],
-		[ [0, -20]					, [La, -20] ],
-		[ [0, -C.Wce+20]		, [La, -C.Wce+20] ],
-		[ [0, -C.Wce]				, [La, -C.Wce] ]
+		[ [0, -C.Wce/2], [C.Nsu*C.Lsu, -C.Wce/2] ]
 	);
 
-	var K = C.Nsu * 16/3;
+	var u = 18; // sensors per half-octave
+	var m = 16; // sensors per sensor unit
+	var N = C.Nsu * m;
+	var a = N.mod(u) / 2;
+	var b = N - a*2;
 
-	for(var i=0; i<K; i++) {
-		var x = i*15;
-		if(x<La)
-			lines.push([ [x, 0]				, [x, -C.Wce] ]);
-		if(x+5<La)
-			lines.push([ [x+5, -20]		, [x+5, -C.Wce+20] ]);
-		if(x+10<La)
-			lines.push([ [x+10, -20]	, [x+10, -C.Wce+20] ]);
-	}
-	lines.push([ [La, 0]		, [La, -C.Wce] ]);
-	*/
+	var i1 = 2.5;
+	var i18 = i1 / Math.sin(Math.PI/32);
+	var i9 = i1*2 + i1 / Math.sin(Math.PI/16);
+	var i6 = i9 * Math.sin(Math.PI/6*2);
+	var i3 = i9 * Math.sin(Math.PI/6*1);
+	
+	var x = 2.5; // center of sensor
 
-	var lines = new Array(
-		[ [0, -20]					, [La, -20] ],
-		[ [0, -C.Wce+20]		, [La, -C.Wce+20] ]
-	);
-	var K = C.Nsu * 16/3;
-	var x = 0;
-
-	if(C.Nsu%3 == 2) {
-		lines.push([ [x, -20]		, [x, -C.Wce+20] ]);
-		x+=5;
-	}
-
-	for(; x<La; x+=15) {
-		if(x<La)
-			lines.push([ [x, -20]				, [x, -C.Wce+20] ]);
-		if(x+5<La) {
-			lines.push([ [x+5, 0]				, [x+5, -C.Wce] ]);
-			lines.push([ [x+5, 0]				, [x+10, 0] ]);
-			lines.push([ [x+5, -C.Wce]	, [x+10, -C.Wce] ]);
-		}
-		if(x+10<La)
-			lines.push([ [x+10, 0]			, [x+10, -C.Wce] ]);
+	function plot(rem) {
+		if(rem == 0)
+			lines.push([ [x, -C.Wce/2 + i18]			, [x, -C.Wce/2 - i18] ]);
+		else if(rem/3 == 1)
+			lines.push([ [x, -C.Wce/2 + i3]				, [x, -C.Wce/2 - i3] ]);
+		else if(rem/6 == 1)
+			lines.push([ [x, -C.Wce/2 + i6]				, [x, -C.Wce/2 - i6] ]);
+		else if(rem/9 == 1)
+			lines.push([ [x, -C.Wce/2 + i9]				, [x, -C.Wce/2 - i9] ]);
+		else if(rem/12 == 1)
+			lines.push([ [x, -C.Wce/2 + i6]				, [x, -C.Wce/2 - i6] ]);
+		else if(rem/15 == 1)
+			lines.push([ [x, -C.Wce/2 + i3]				, [x, -C.Wce/2 - i3] ]);
+		else
+			lines.push([ [x, -C.Wce/2 + i1]				, [x, -C.Wce/2 - i1] ]);
 	}
 
-	lines.push([ [La, -20]		, [La, -C.Wce+20] ]);
+	for(var i=0; i<a; i++, x+=5) {
+		var rem = (u-a+i-1)%u;
+		plot(rem);
+	}
+	
+	for(var i=0; i<b; i++, x+=5) {
+		var rem = (i-1)%u;
+		plot(rem);
+	}
+
+	for(var i=0; i<a; i++, x+=5) {
+		var rem = (i-1)%u;
+		plot(rem);
+	}
 
 	for(var i=0; i<lines.length; i++) {
 		var l1 = new RLineEntity(doc, new RLineData(
