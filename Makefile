@@ -19,34 +19,30 @@ ECMA_SOURCES += wrapping.js
 QCAD_BATCH := qcad -allow-multiple-instances -autostart
 XSLTPROC := xsltproc
 
-#TARGETS := chimaera_S48_2.0mm.dxf		chimaera_S48_2.5mm.dxf	chimaera_S48_3.0mm.dxf
-#TARGETS += chimaera_S64_2.0mm.dxf		chimaera_S64_2.5mm.dxf	chimaera_S64_3.0mm.dxf
-#TARGETS += chimaera_S80_2.0mm.dxf		chimaera_S80_2.5mm.dxf	chimaera_S80_3.0mm.dxf
-#TARGETS += chimaera_S96_2.0mm.dxf		chimaera_S96_2.5mm.dxf	chimaera_S96_3.0mm.dxf
-#TARGETS += chimaera_S112_2.0mm.dxf	chimaera_S112_2.5mm.dxf	chimaera_S112_3.0mm.dxf
-#TARGETS += chimaera_S128_2.0mm.dxf	chimaera_S128_2.5mm.dxf	chimaera_S128_3.0mm.dxf
-#TARGETS += chimaera_S144_2.0mm.dxf	chimaera_S144_2.5mm.dxf
-#TARGETS += chimaera_S160_2.0mm.dxf	chimaera_S160_2.5mm.dxf
+TARGETS := chimaera_S48_2.0mm.dxf		chimaera_S48_2.5mm.dxf	chimaera_S48_3.0mm.dxf
+TARGETS += chimaera_S64_2.0mm.dxf		chimaera_S64_2.5mm.dxf	chimaera_S64_3.0mm.dxf
+TARGETS += chimaera_S80_2.0mm.dxf		chimaera_S80_2.5mm.dxf	chimaera_S80_3.0mm.dxf
+TARGETS += chimaera_S96_2.0mm.dxf		chimaera_S96_2.5mm.dxf	chimaera_S96_3.0mm.dxf
+TARGETS += chimaera_S112_2.0mm.dxf	chimaera_S112_2.5mm.dxf	chimaera_S112_3.0mm.dxf
+TARGETS += chimaera_S128_2.0mm.dxf	chimaera_S128_2.5mm.dxf	chimaera_S128_3.0mm.dxf
+TARGETS += chimaera_S144_2.0mm.dxf	chimaera_S144_2.5mm.dxf
+TARGETS += chimaera_S160_2.0mm.dxf	chimaera_S160_2.5mm.dxf
 
-#PONOKO := chimaera_S48_2.0mm.svg		chimaera_S48_2.5mm.svg	chimaera_S48_3.0mm.svg
-#PONOKO += chimaera_S64_2.0mm.svg		chimaera_S64_2.5mm.svg	chimaera_S64_3.0mm.svg
-#PONOKO += chimaera_S80_2.0mm.svg		chimaera_S80_2.5mm.svg	chimaera_S80_3.0mm.svg
-#PONOKO += chimaera_S96_2.0mm.svg		chimaera_S96_2.5mm.svg	chimaera_S96_3.0mm.svg
-#PONOKO += chimaera_S112_2.0mm.svg		chimaera_S112_2.5mm.svg	chimaera_S112_3.0mm.svg
-#PONOKO += chimaera_S128_2.0mm.svg		chimaera_S128_2.5mm.svg	chimaera_S128_3.0mm.svg
+PONOKO := chimaera_S48_2.0mm.svg		chimaera_S48_2.5mm.svg	chimaera_S48_3.0mm.svg
+PONOKO += chimaera_S64_2.0mm.svg		chimaera_S64_2.5mm.svg	chimaera_S64_3.0mm.svg
+PONOKO += chimaera_S80_2.0mm.svg		chimaera_S80_2.5mm.svg	chimaera_S80_3.0mm.svg
+PONOKO += chimaera_S96_2.0mm.svg		chimaera_S96_2.5mm.svg	chimaera_S96_3.0mm.svg
+PONOKO += chimaera_S112_2.0mm.svg		chimaera_S112_2.5mm.svg	chimaera_S112_3.0mm.svg
+PONOKO += chimaera_S128_2.0mm.svg		chimaera_S128_2.5mm.svg	chimaera_S128_3.0mm.svg
 
-#DWERK := chimaera_S128_2.0mm.pdf		chimaera_S144_2.0mm.pdf	chimaera_S160_2.0mm.pdf
-
-TARGETS := chimaera_S128_2.0mm.dxf
-PONOKO := chimaera_S128_2.0mm.svg
-DWERK := chimaera_S128_2.0mm.pdf
+DWERK := chimaera_S128_2.0mm.pdf		chimaera_S144_2.0mm.pdf	chimaera_S160_2.0mm.pdf
 
 P2_WIDTH := 384
 P2_HEIGHT := 384
 P3_WIDTH := 790
 P3_HEIGHT := 384
 
-TOLERANCE := 0.3 # mm
+TOLERANCE := 0.2 # mm
 
 all: $(TARGETS) $(PONOKO) $(DWERK)
 

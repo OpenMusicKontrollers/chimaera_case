@@ -31,7 +31,7 @@ include("./chimaera.js");
 
 // default Configuration
 var C = {
-	Rev : 3,
+	Rev : 4,
 
 	Lle : 30,		// length left
 	Lsi : 5,		// length side
