@@ -119,7 +119,7 @@ function rib_D_Rev4(di, C) {
 		pos3, pos3,
 		2, 2,
 		RS.VAlignMiddle, RS.HAlignCenter, RS.LeftToRight, RS.Exact, 1.0,
-		"6 V DC", "CourierCad",
+		"5 V DC", "CourierCad",
 		true, false, -Math.PI/2, true));
 	txt3.setLayerId(eng);
 	explode_text(doc, op, txt3);

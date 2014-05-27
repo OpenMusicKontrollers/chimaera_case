@@ -94,56 +94,56 @@ function rib_A(di, C) {
 
 	if(C.CE) {
 		var X = C.Hca/2;
-		var Y = -C.Wce/3;
+		var Y = -C.Wce/3 + 3;
 		var radius = 5/2;
 
-		var va3 = new RVector(X, Y);
-		var arc3 = new RArcEntity(doc, new RArcData(va3, radius, -0.1, -Math.PI+0.1, false));
+		var va3 = new RVector(X, Y-radius*2);
+		var arc3 = new RArcEntity(doc, new RArcData(va3, radius, Math.PI-0.1, 0.1, false));
 		arc3.setLayerId(eng);
 		op.addObject(arc3, false);
 
-		var va4 = new RVector(X, Y-radius*2);
-		var arc4 = new RArcEntity(doc, new RArcData(va4, radius, -0.1, -Math.PI-0.1, false));
+		var va4 = new RVector(X, Y);
+		var arc4 = new RArcEntity(doc, new RArcData(va4, radius, Math.PI-0.1, 0.1, false));
 		arc4.setLayerId(eng);
 		op.addObject(arc4, false);
 
 		var l1 = new RLineEntity(doc, new RLineData(
-			new RVector(X, Y-radius),
-			new RVector(X, Y-radius*1.9)));
+			new RVector(X, Y-radius*0.1),
+			new RVector(X, Y-radius)));
 		l1.setLayerId(eng);
 		op.addObject(l1, false);
 	}
 
 	if(C.FCC) {
 		var X = C.Hca/2;
-		var Y = -C.Wce/3*2;
+		var Y = -C.Wce/3*2 + 1;
 		var radius = 5/2;
 
 		var va3 = new RVector(X, Y);
-		var arc3 = new RArcEntity(doc, new RArcData(va3, radius, -0.9, -Math.PI+0.9, false));
+		var arc3 = new RArcEntity(doc, new RArcData(va3, radius, Math.PI-0.9, 0.9, false));
 		arc3.setLayerId(eng);
 		op.addObject(arc3, false);
 
 		var va4 = new RVector(X, Y);
-		var arc4 = new RArcEntity(doc, new RArcData(va4, radius/2, -0.9, -Math.PI+0.9, false));
+		var arc4 = new RArcEntity(doc, new RArcData(va4, radius/2, Math.PI-0.9, 0.9, false));
 		arc4.setLayerId(eng);
 		op.addObject(arc4, false);
 
 		var l1 = new RLineEntity(doc, new RLineData(
-			new RVector(X-radius, Y+radius*1.5),
-			new RVector(X+radius, Y+radius*1.5)));
+			new RVector(X-radius, Y-radius*1.5),
+			new RVector(X+radius, Y-radius*1.5)));
 		l1.setLayerId(eng);
 		op.addObject(l1, false);
 
 		var l2 = new RLineEntity(doc, new RLineData(
-			new RVector(X, Y+radius*1.5),
-			new RVector(X, Y+radius)));
+			new RVector(X, Y-radius*1.5),
+			new RVector(X, Y-radius)));
 		l2.setLayerId(eng);
 		op.addObject(l2, false);
 
 		var l3 = new RLineEntity(doc, new RLineData(
-			new RVector(X+radius, Y+radius*1.5),
-			new RVector(X+radius, Y+radius*0.8)));
+			new RVector(X-radius, Y-radius*1.5),
+			new RVector(X-radius, Y-radius*0.8)));
 		l3.setLayerId(eng);
 		op.addObject(l3, false);
 	}
