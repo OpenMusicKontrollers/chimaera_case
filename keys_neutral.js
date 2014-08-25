@@ -50,6 +50,19 @@ function keys(di, C) {
 			lines.push([ [x, -C.Wce/2 + i3]				, [x, -C.Wce/2 - i3] ]);
 		else
 			lines.push([ [x, -C.Wce/2 + i1]				, [x, -C.Wce/2 - i1] ]);
+
+		if(rem == 17) {
+			var va1 = new RVector(x, -C.Wce/2 - 23);
+			var arc1 = new RCircleEntity(doc, new RCircleData(va1, 2));
+			arc1.setLayerId(eng);
+			op.addObject(arc1, false);
+		}
+		if(rem == 1) {
+			var va2 = new RVector(x, -C.Wce/2 + 23);
+			var arc2 = new RCircleEntity(doc, new RCircleData(va2, 2));
+			arc2.setLayerId(eng);
+			op.addObject(arc2, false);
+		}
 	}
 
 	for(var i=0; i<a; i++, x+=5) {

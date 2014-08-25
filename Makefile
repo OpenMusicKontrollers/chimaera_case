@@ -1,10 +1,13 @@
 ECMA_SOURCES := wizard.js
+ECMA_SOURCES += preview.js
 ECMA_SOURCES += helper.js
 ECMA_SOURCES += chimaera.js
 ECMA_SOURCES += base.js
 ECMA_SOURCES += hole_A.js
 ECMA_SOURCES += hole_B.js
-ECMA_SOURCES += keys.js
+ECMA_SOURCES += keys_simple.js
+ECMA_SOURCES += keys_neutral.js
+ECMA_SOURCES += keys_piano.js
 ECMA_SOURCES += label_chim.js
 ECMA_SOURCES += label_omk.js
 ECMA_SOURCES += rib_common.js
@@ -15,6 +18,7 @@ ECMA_SOURCES += rib_D_Rev3.js
 ECMA_SOURCES += rib_D_Rev4.js
 ECMA_SOURCES += side.js
 ECMA_SOURCES += wrapping.js
+ECMA_SOURCES += wrapping_top.js
 
 QCAD_BATCH := qcad -allow-multiple-instances -autostart
 XSLTPROC := xsltproc
@@ -25,9 +29,15 @@ TARGETS += chimaera_S80_2.0mm.dxf		chimaera_S80_2.5mm.dxf	chimaera_S80_3.0mm.dxf
 TARGETS += chimaera_S96_2.0mm.dxf		chimaera_S96_2.5mm.dxf	chimaera_S96_3.0mm.dxf
 TARGETS += chimaera_S112_2.0mm.dxf	chimaera_S112_2.5mm.dxf	chimaera_S112_3.0mm.dxf
 TARGETS += chimaera_S128_2.0mm.dxf	chimaera_S128_2.5mm.dxf	chimaera_S128_3.0mm.dxf
-TARGETS += chimaera_S128_2.3mm.dxf
+
+TARGETS += chimaera_S96_2.3mm.dxf		chimaera_S128_2.3mm.dxf
+
 TARGETS += chimaera_S144_2.0mm.dxf	chimaera_S144_2.5mm.dxf
 TARGETS += chimaera_S160_2.0mm.dxf	chimaera_S160_2.5mm.dxf
+
+TARGETS += chimaera_S144_2.5mm_prev_simple.svg
+TARGETS += chimaera_S144_2.5mm_prev_neutral.svg
+TARGETS += chimaera_S144_2.5mm_prev_piano.svg
 
 PONOKO := chimaera_S48_2.0mm.svg		chimaera_S48_2.5mm.svg	chimaera_S48_3.0mm.svg
 PONOKO += chimaera_S64_2.0mm.svg		chimaera_S64_2.5mm.svg	chimaera_S64_3.0mm.svg
@@ -35,7 +45,8 @@ PONOKO += chimaera_S80_2.0mm.svg		chimaera_S80_2.5mm.svg	chimaera_S80_3.0mm.svg
 PONOKO += chimaera_S96_2.0mm.svg		chimaera_S96_2.5mm.svg	chimaera_S96_3.0mm.svg
 PONOKO += chimaera_S112_2.0mm.svg		chimaera_S112_2.5mm.svg	chimaera_S112_3.0mm.svg
 PONOKO += chimaera_S128_2.0mm.svg		chimaera_S128_2.5mm.svg	chimaera_S128_3.0mm.svg
-PONOKO += chimaera_S128_2.3mm.svg
+
+PONOKO += chimaera_S96_2.3mm.svg		chimaera_S128_2.3mm.svg
 
 DWERK := chimaera_S128_2.0mm.pdf		chimaera_S144_2.0mm.pdf	chimaera_S160_2.0mm.pdf
 
@@ -87,6 +98,16 @@ chimaera_S144_%mm.dxf: $(ECMA_SOURCES)
 
 chimaera_S160_%mm.dxf: $(ECMA_SOURCES)
 	$(QCAD_BATCH) $(CURDIR)/$< Rev 4 Nsu 10 Mth $* Mto $(TOLERANCE) Lle 5 $(CURDIR)/$@
+
+
+chimaera_S144_%mm_prev_simple.svg: $(ECMA_SOURCES)
+	$(QCAD_BATCH) $(CURDIR)/$< Pre 1 Key 0 Rev 4 Nsu 9 Mth $* Mto $(TOLERANCE) $(CURDIR)/$@
+
+chimaera_S144_%mm_prev_neutral.svg: $(ECMA_SOURCES)
+	$(QCAD_BATCH) $(CURDIR)/$< Pre 1 Key 1 Rev 4 Nsu 9 Mth $* Mto $(TOLERANCE) $(CURDIR)/$@
+
+chimaera_S144_%mm_prev_piano.svg: $(ECMA_SOURCES)
+	$(QCAD_BATCH) $(CURDIR)/$< Pre 1 Key 2 Rev 4 Nsu 9 Mth $* Mto $(TOLERANCE) $(CURDIR)/$@
 
 clean:
 	rm -f $(TARGETS) $(PONOKO) $(DWERK)

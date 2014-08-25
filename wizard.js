@@ -27,11 +27,11 @@ doc.setVariable("PageSettings/PaperHeight", 600);
 doc.setVariable("PageSettings/OffsetX", -5);
 doc.setVariable("PageSettings/OffsetY", -595);
 
-include("./chimaera.js");
-
 // default Configuration
 var C = {
 	Rev : 4,
+	Pre : 0,		// preview?
+	Key : 0,
 
 	Lle : 30,		// length left
 	Lsi : 5,		// length side
@@ -71,7 +71,18 @@ for(var i=4; i<args.length-1; i+=2) {
 	}
 }
 
+if(C.Pre)
+	include("./preview.js");
+else
+	include("./chimaera.js");
+
 var op = chimaera(di, C);
 op.apply(doc);
 
-di.exportFile(output);
+if(C.Pre) {
+	include("scripts/Pro/ImportExport/SvgExporter/SvgExporterPG.js");
+	var exporter = new SvgExporterPG(doc, {"scale": "1:1"});
+	exporter.exportFile(output);
+}
+else
+	di.exportFile(output);

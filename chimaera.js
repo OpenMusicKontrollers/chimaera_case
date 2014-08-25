@@ -10,8 +10,18 @@
  * conditions.
  */
 
+switch(C.Key) {
+	case 0:
+		include("./keys_simple.js");
+		break;
+	case 1:
+		include("./keys_neutral.js");
+		break;
+	case 2:
+		include("./keys_piano.js");
+		break;
+}
 include("./wrapping.js");
-include("./keys.js");
 include("./hole_B.js");
 include("./base.js");
 include("./hole_A.js");
