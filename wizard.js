@@ -31,7 +31,7 @@ doc.setVariable("PageSettings/OffsetY", -595);
 var C = {
 	Rev : 4,
 	Pre : 0,		// preview?
-	Key : 0,
+	Key : 1,		// neutral
 
 	Lle : 30,		// length left
 	Lsi : 5,		// length side

@@ -24,7 +24,7 @@ function keys(di, C) {
 	var u = 18; // sensors per half-octave
 	var m = 16; // sensors per sensor unit
 	var N = C.Nsu * m;
-	var a = N.mod(u) / 2;
+	var a = N%u / 2;
 	var b = N - a*2;
 
 	var i1 = 2.5;
@@ -51,7 +51,7 @@ function keys(di, C) {
 		else
 			lines.push([ [x, -C.Wce/2 + i1]				, [x, -C.Wce/2 - i1] ]);
 
-		if(rem == 17) {
+		if( (rem == -1) || (rem == 17) ) {
 			var va1 = new RVector(x, -C.Wce/2 - 23);
 			var arc1 = new RCircleEntity(doc, new RCircleData(va1, 2));
 			arc1.setLayerId(eng);

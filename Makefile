@@ -23,30 +23,32 @@ ECMA_SOURCES += wrapping_top.js
 QCAD_BATCH := qcad -allow-multiple-instances -autostart
 XSLTPROC := xsltproc
 
-TARGETS := chimaera_S48_2.0mm.dxf		chimaera_S48_2.5mm.dxf	chimaera_S48_3.0mm.dxf
-TARGETS += chimaera_S64_2.0mm.dxf		chimaera_S64_2.5mm.dxf	chimaera_S64_3.0mm.dxf
-TARGETS += chimaera_S80_2.0mm.dxf		chimaera_S80_2.5mm.dxf	chimaera_S80_3.0mm.dxf
-TARGETS += chimaera_S96_2.0mm.dxf		chimaera_S96_2.5mm.dxf	chimaera_S96_3.0mm.dxf
-TARGETS += chimaera_S112_2.0mm.dxf	chimaera_S112_2.5mm.dxf	chimaera_S112_3.0mm.dxf
-TARGETS += chimaera_S128_2.0mm.dxf	chimaera_S128_2.5mm.dxf	chimaera_S128_3.0mm.dxf
+TARGETS := chimaera_S48_2.0mm.dxf	 chimaera_S48_2.3mm.dxf	 chimaera_S48_2.5mm.dxf
+TARGETS += chimaera_S64_2.0mm.dxf	 chimaera_S64_2.3mm.dxf	 chimaera_S64_2.5mm.dxf
+TARGETS += chimaera_S80_2.0mm.dxf	 chimaera_S80_2.3mm.dxf	 chimaera_S80_2.5mm.dxf
+TARGETS += chimaera_S96_2.0mm.dxf	 chimaera_S96_2.3mm.dxf	 chimaera_S96_2.5mm.dxf
+TARGETS += chimaera_S112_2.0mm.dxf chimaera_S112_2.3mm.dxf chimaera_S112_2.5mm.dxf
+TARGETS += chimaera_S128_2.0mm.dxf chimaera_S128_2.3mm.dxf chimaera_S128_2.5mm.dxf
+TARGETS += chimaera_S144_2.0mm.dxf chimaera_S144_2.3mm.dxf chimaera_S144_2.5mm.dxf
+TARGETS += chimaera_S160_2.0mm.dxf chimaera_S160_2.3mm.dxf chimaera_S160_2.5mm.dxf
 
-TARGETS += chimaera_S96_2.3mm.dxf		chimaera_S128_2.3mm.dxf
+PREVIEW := chimaera_S144_2.5mm_prev_simple.svg
+PREVIEW += chimaera_S144_2.5mm_prev_piano.svg
+PREVIEW += chimaera_S144_2.5mm_prev_neutral.svg
+#PREVIEW += chimaera_S48_2.5mm_prev_neutral.svg
+#PREVIEW += chimaera_S64_2.5mm_prev_neutral.svg
+#PREVIEW += chimaera_S80_2.5mm_prev_neutral.svg
+#PREVIEW += chimaera_S96_2.5mm_prev_neutral.svg
+#PREVIEW += chimaera_S112_2.5mm_prev_neutral.svg
+#PREVIEW += chimaera_S128_2.5mm_prev_neutral.svg
+#PREVIEW += chimaera_S160_2.5mm_prev_neutral.svg
 
-TARGETS += chimaera_S144_2.0mm.dxf	chimaera_S144_2.5mm.dxf
-TARGETS += chimaera_S160_2.0mm.dxf	chimaera_S160_2.5mm.dxf
-
-TARGETS += chimaera_S144_2.5mm_prev_simple.svg
-TARGETS += chimaera_S144_2.5mm_prev_neutral.svg
-TARGETS += chimaera_S144_2.5mm_prev_piano.svg
-
-PONOKO := chimaera_S48_2.0mm.svg		chimaera_S48_2.5mm.svg	chimaera_S48_3.0mm.svg
-PONOKO += chimaera_S64_2.0mm.svg		chimaera_S64_2.5mm.svg	chimaera_S64_3.0mm.svg
-PONOKO += chimaera_S80_2.0mm.svg		chimaera_S80_2.5mm.svg	chimaera_S80_3.0mm.svg
-PONOKO += chimaera_S96_2.0mm.svg		chimaera_S96_2.5mm.svg	chimaera_S96_3.0mm.svg
-PONOKO += chimaera_S112_2.0mm.svg		chimaera_S112_2.5mm.svg	chimaera_S112_3.0mm.svg
-PONOKO += chimaera_S128_2.0mm.svg		chimaera_S128_2.5mm.svg	chimaera_S128_3.0mm.svg
-
-PONOKO += chimaera_S96_2.3mm.svg		chimaera_S128_2.3mm.svg
+PONOKO := chimaera_S48_2.3mm.svg
+PONOKO += chimaera_S64_2.3mm.svg
+PONOKO += chimaera_S80_2.3mm.svg
+PONOKO += chimaera_S96_2.3mm.svg
+PONOKO += chimaera_S112_2.3mm.svg
+PONOKO += chimaera_S128_2.3mm.svg
 
 DWERK := chimaera_S128_2.0mm.pdf		chimaera_S144_2.0mm.pdf	chimaera_S160_2.0mm.pdf
 
@@ -57,17 +59,19 @@ P3_HEIGHT := 384
 
 TOLERANCE := 0.1 # mm
 
-all: $(TARGETS) $(PONOKO) $(DWERK)
+all: $(TARGETS)
+
+preview: $(PREVIEW)
 
 ponoko: $(PONOKO)
 
 digitalwerkstatt: $(DWERK)
 
-chimaera_S48_%.svg: ponoko.xslt chimaera_S48_%.dxf.svg
-	$(XSLTPROC) --stringparam new_width $(P2_WIDTH) --stringparam new_height $(P2_HEIGHT) -o $@ $+
-
 %.pdf:	%.dxf digitalwerkstatt.js
 	$(QCAD_BATCH) $(CURDIR)/digitalwerkstatt.js $(CURDIR)/$< $(CURDIR)/$@
+
+chimaera_S48_%.svg: ponoko.xslt chimaera_S48_%.dxf.svg
+	$(XSLTPROC) --stringparam new_width $(P2_WIDTH) --stringparam new_height $(P2_HEIGHT) -o $@ $+
 
 %.svg: ponoko.xslt %.dxf.svg
 	$(XSLTPROC) --stringparam new_width $(P3_WIDTH) --stringparam new_height $(P3_HEIGHT) -o $@ $+
@@ -75,39 +79,28 @@ chimaera_S48_%.svg: ponoko.xslt chimaera_S48_%.dxf.svg
 %.dxf.svg: %.dxf ponoko.js
 	$(QCAD_BATCH) $(CURDIR)/ponoko.js $(CURDIR)/$< $(CURDIR)/$@
 
-chimaera_S48_%mm.dxf: $(ECMA_SOURCES)
-	$(QCAD_BATCH) $(CURDIR)/$< Rev 4 Nsu 3 Mth $* Mto $(TOLERANCE) $(CURDIR)/$@
 
-chimaera_S64_%mm.dxf: $(ECMA_SOURCES)
-	$(QCAD_BATCH) $(CURDIR)/$< Rev 4 Nsu 4 Mth $* Mto $(TOLERANCE) $(CURDIR)/$@
+chimaera_S%_2.0mm.dxf: $(ECMA_SOURCES)
+	$(QCAD_BATCH) $(CURDIR)/$< Rev 4 Nsu $$(($* / 16)) Mth 2.0 Mto $(TOLERANCE) $(CURDIR)/$@
 
-chimaera_S80_%mm.dxf: $(ECMA_SOURCES)
-	$(QCAD_BATCH) $(CURDIR)/$< Rev 4 Nsu 5 Mth $* Mto $(TOLERANCE) $(CURDIR)/$@
+chimaera_S%_2.3mm.dxf: $(ECMA_SOURCES)
+	$(QCAD_BATCH) $(CURDIR)/$< Rev 4 Nsu $$(($* / 16)) Mth 2.3 Mto $(TOLERANCE) $(CURDIR)/$@
 
-chimaera_S96_%mm.dxf: $(ECMA_SOURCES)
-	$(QCAD_BATCH) $(CURDIR)/$< Rev 4 Nsu 6 Mth $* Mto $(TOLERANCE) $(CURDIR)/$@
-
-chimaera_S112_%mm.dxf: $(ECMA_SOURCES)
-	$(QCAD_BATCH) $(CURDIR)/$< Rev 4 Nsu 7 Mth $* Mto $(TOLERANCE) $(CURDIR)/$@
-
-chimaera_S128_%mm.dxf: $(ECMA_SOURCES)
-	$(QCAD_BATCH) $(CURDIR)/$< Rev 4 Nsu 8 Mth $* Mto $(TOLERANCE) $(CURDIR)/$@
-
-chimaera_S144_%mm.dxf: $(ECMA_SOURCES)
-	$(QCAD_BATCH) $(CURDIR)/$< Rev 4 Nsu 9 Mth $* Mto $(TOLERANCE) $(CURDIR)/$@
+chimaera_S%_2.5mm.dxf: $(ECMA_SOURCES)
+	$(QCAD_BATCH) $(CURDIR)/$< Rev 4 Nsu $$(($* / 16)) Mth 2.5 Mto $(TOLERANCE) $(CURDIR)/$@
 
 chimaera_S160_%mm.dxf: $(ECMA_SOURCES)
 	$(QCAD_BATCH) $(CURDIR)/$< Rev 4 Nsu 10 Mth $* Mto $(TOLERANCE) Lle 5 $(CURDIR)/$@
 
 
-chimaera_S144_%mm_prev_simple.svg: $(ECMA_SOURCES)
-	$(QCAD_BATCH) $(CURDIR)/$< Pre 1 Key 0 Rev 4 Nsu 9 Mth $* Mto $(TOLERANCE) $(CURDIR)/$@
+chimaera_S%_2.5mm_prev_simple.svg: $(ECMA_SOURCES)
+	$(QCAD_BATCH) $(CURDIR)/$< Pre 1 Key 0 Rev 4 Nsu $$(($* / 16)) Mth 2.5 Mto $(TOLERANCE) $(CURDIR)/$@
 
-chimaera_S144_%mm_prev_neutral.svg: $(ECMA_SOURCES)
-	$(QCAD_BATCH) $(CURDIR)/$< Pre 1 Key 1 Rev 4 Nsu 9 Mth $* Mto $(TOLERANCE) $(CURDIR)/$@
+chimaera_S%_2.5mm_prev_neutral.svg: $(ECMA_SOURCES)
+	$(QCAD_BATCH) $(CURDIR)/$< Pre 1 Key 1 Rev 4 Nsu $$(($* / 16)) Mth 2.5 Mto $(TOLERANCE) $(CURDIR)/$@
 
-chimaera_S144_%mm_prev_piano.svg: $(ECMA_SOURCES)
-	$(QCAD_BATCH) $(CURDIR)/$< Pre 1 Key 2 Rev 4 Nsu 9 Mth $* Mto $(TOLERANCE) $(CURDIR)/$@
+chimaera_S%_2.5mm_prev_piano.svg: $(ECMA_SOURCES)
+	$(QCAD_BATCH) $(CURDIR)/$< Pre 1 Key 2 Rev 4 Nsu $$(($* / 16)) Mth 2.5 Mto $(TOLERANCE) $(CURDIR)/$@
 
 clean:
-	rm -f $(TARGETS) $(PONOKO) $(DWERK)
+	rm -f $(TARGETS) $(PONOKO) $(DWERK) $(PREVIEW)
